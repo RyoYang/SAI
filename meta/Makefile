@@ -78,7 +78,7 @@ OBJ = saimetadata.o saimetadatautils.o saiserialize.o
 
 SYMBOLS = $(OBJ:=.symbols)
 
-all: toolsversions saisanitycheck saimetadatatest saiserializetest saidepgraph.svg $(SYMBOLS)
+all: toolsversions saisanitycheck saimetadatatest saiserializetest saidepgraph.svg $(SYMBOLS) rpc sai.thrift sai_rpc_server.cpp sai_adapter.py
 	./checkheaders.pl ../inc ../inc
 	./checkenumlock.sh
 	./checkancestry.sh
