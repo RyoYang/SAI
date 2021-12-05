@@ -21,7 +21,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "sai_rpc.h"
-// #include "switch_sai_rpc_server.h"
+#include "switch_sai_rpc_server.h"
 
 #define UNREFERENCED_PARAMETER(P)   (P)
 
