@@ -95,7 +95,7 @@ $(ODIR)/librpcserver.a: $(ODIR)/sai_rpc.o $(ODIR)/sai_types.o $(ODIR)/sai_consta
 	ar rcs $(ODIR)/librpcserver.a $^
 
 clientlib: $(PY_SOURCES) $(SAI_PY_HEADERS)
-	python setup.py sdist
+	python3 setup.py sdist
 
 saiserver: $(ODIR)/saiserver.o $(ODIR)/librpcserver.a
 	$(CXX) $(LDFLAGS) $(ODIR)/sai_rpc_server.o $(ODIR)/saiserver.o -o $@ \
@@ -108,7 +108,7 @@ install-lib: $(ODIR)/librpcserver.a
 
 install-pylib: clientlib
 	cp $(METADIR)sai_adapter.py gen-py/sai/
-	python setup.py install --prefix $(DESTDIR)/usr/local$(prefix)
+	python3 setup.py install --prefix $(DESTDIR)/usr/local$(prefix)
 
 install: install-lib install-pylib
 

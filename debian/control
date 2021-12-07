@@ -25,3 +25,8 @@ Package: python-saithrift
 Architecture: any
 Depends: ${shlibs:Depends}
 Description: This package contains python SAI rpc library.
+
+Package: python3-saithrift
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: This package contains python3 SAI rpc library.
