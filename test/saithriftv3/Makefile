@@ -18,6 +18,20 @@ ifeq ($(DEBUG),1)
 CPPFLAGS += -O0 -ggdb
 endif
 
+ifeq ($(platform),MLNX)
+CDEFS = -DMLNXSAI
+else
+ifeq ($(platform),BFT)
+CDEFS = -DBFTSAI
+else
+ifeq ($(platform),CAVIUM)
+CDEFS = -DCAVIUMSAI
+else
+CDEFS = -DBRCMSAI
+endif
+endif
+endif
+
 ifneq (, $(wildcard /usr/local/bin/ctypesgen))
 CTYPESGEN = /usr/local/bin/ctypesgen
 else
@@ -50,18 +64,14 @@ SAI_PY_HEADERS = gen-py/sai/sai_headers.py
 MKDIR_P = mkdir -p
 INSTALL := /usr/bin/install
 
-all: directories meta gensaimetadata gensairpc $(ODIR)/librpcserver.a clientlib saiserver
+all: clean directories meta $(ODIR)/librpcserver.a clientlib saiserver
 
 directories:
 	$(MKDIR_P) $(ODIR) 
 
 meta:
 	make -C  ../../meta
-
-gensaimetadata:
-	cd $(METADIR) && perl -I. parse.pl
-gensairpc:
-	cd $(METADIR) && ./gensairpc.pl --clean
+	make -C  ../../meta rpc
 
 $(CPP_SOURCES): $(METADIR)sai.thrift
 	$(THRIFT) -o ./ --gen cpp -r $^
