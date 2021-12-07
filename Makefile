@@ -31,10 +31,10 @@ test:
 	make -C test
 
 saithrift-build:
-	make -C $(SAITHRIFTV2)
+	make -C $(SAITHRIFT_PATH)
 
 saithrift-install: saithrift-build
-	make -C $(SAITHRIFTV2) install
+	make -C $(SAITHRIFT_PATH) install
 
 clean:
 	make -C test clean    
