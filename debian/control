@@ -32,11 +32,6 @@ Architecture: any
 Depends: ${shlibs:Depends}
 Description: This package contains SAI rpc library development headers
 
-Package: libsaithriftv2-dev
-Architecture: any
-Depends: ${shlibs:Depends}
-Description: This package contains SAIv2 rpc library development headers
-
 Package: python-saithrift
 Architecture: any
 Depends: ${shlibs:Depends}
