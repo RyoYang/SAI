@@ -64,12 +64,13 @@ SAI_PY_HEADERS = gen-py/sai/sai_headers.py
 MKDIR_P = mkdir -p
 INSTALL := /usr/bin/install
 
-all: clean directories meta $(ODIR)/librpcserver.a clientlib saiserver
+all: clean directories meta $(ODIR)/librpcserver.a clientlib saiserverv2
 
 directories:
 	$(MKDIR_P) $(ODIR) 
 
 meta:
+	make -C  ../../meta clean
 	make -C  ../../meta
 	make -C  ../../meta rpc
 
@@ -97,13 +98,13 @@ $(ODIR)/librpcserver.a: $(ODIR)/sai_rpc.o $(ODIR)/sai_types.o $(ODIR)/sai_consta
 clientlib: $(PY_SOURCES) $(SAI_PY_HEADERS)
 	python3 setup.py sdist
 
-saiserver: $(ODIR)/saiserver.o $(ODIR)/librpcserver.a
+saiserverv2: $(ODIR)/saiserver.o $(ODIR)/librpcserver.a
 	$(CXX) $(LDFLAGS) $(ODIR)/sai_rpc_server.o $(ODIR)/saiserver.o -o $@ \
 		   $(ODIR)/librpcserver.a $(LIBS)
 
 install-lib: $(ODIR)/librpcserver.a
 	$(INSTALL) -D $(ODIR)/librpcserver.a $(DESTDIR)/usr/lib/librpcserver.a
-	$(INSTALL) -D saiserver $(DESTDIR)/usr/sbin/saiserver
+	$(INSTALL) -D saiserverv2 $(DESTDIR)/usr/sbin/saiserverv2
 	$(INSTALL) -D ./switch_sai_rpc_server.h $(DESTDIR)/usr/include/switch_sai_rpc_server.h
 
 install-pylib: clientlib
@@ -114,4 +115,4 @@ install: install-lib install-pylib
 
 clean:
 	make -C ../../meta clean
-	rm -rf $(ODIR) src dist build saiserver MANIFEST gen-cpp gen-py
+	rm -rf $(ODIR) src dist build saiserverv2 MANIFEST gen-cpp gen-py

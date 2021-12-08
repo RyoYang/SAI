@@ -16,10 +16,26 @@ Depends: saiserver (= ${binary:Version}), ${misc:Depends}
 Section: debug
 Description: debugging symbols for SAI thrift server
 
+Package: saiserverv2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Pre-Depends}
+Description: This package contains SAI thrift serverv2
+
+Package: saiserverv2-dbg
+Architecture: any
+Depends: saiserver (= ${binary:Version}), ${misc:Depends}
+Section: debug
+Description: debugging symbols for SAI thrift serverv2
+
 Package: libsaithrift-dev
 Architecture: any
 Depends: ${shlibs:Depends}
 Description: This package contains SAI rpc library development headers
+
+Package: libsaithriftv2-dev
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: This package contains SAIv2 rpc library development headers
 
 Package: python-saithrift
 Architecture: any
