@@ -14,9 +14,7 @@ SAI_HEADERS = $(SAI_HEADER_DIR)/sai*.h
 LIBS = -lthrift -lpthread
 LDFLAGS = -L$(SAI_LIBRARY_DIR) -Wl,-rpath=$(SAI_LIBRARY_DIR)
 CPPFLAGS = -I$(SAI_HEADER_DIR) -I. -std=c++11
-ifeq ($(DEBUG),1)
 CPPFLAGS += -O0 -ggdb
-endif
 
 ifeq ($(platform),MLNX)
 CDEFS = -DMLNXSAI

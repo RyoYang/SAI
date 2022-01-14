@@ -4,9 +4,7 @@ SAI_PREFIX = /usr
 SAI_HEADER_DIR ?= $(SAI_PREFIX)/include/sai
 SAI_HEADERS = $(SAI_HEADER_DIR)/sai*.h
 CFLAGS = -I$(SAI_HEADER_DIR) -I. -std=c++11 -DFORCE_BOOST_SMART_PTR
-ifeq ($(DEBUG),1)
 CFLAGS += -O0 -ggdb
-endif
 
 ifeq ($(platform),MLNX)
 CDEFS = -DMLNXSAI
