@@ -48,6 +48,12 @@ class FrameworkTester(PlatformSaiHelper):
             bridge_port_id=self.port0_bp)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
+        # test neighbor creation
+        self.neigh_entry = sai_thrift_neighbor_entry_t(
+            self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
+        self.neigh = sai_thrift_create_neighbor_entry(
+            self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:66')
+            
         # test nhop creation
         self.nhop = sai_thrift_create_next_hop(
             self.client,
@@ -63,11 +69,7 @@ class FrameworkTester(PlatformSaiHelper):
             ip=sai_ipaddress('4444::1'))
         self.nhop_list.append(self.nhop1)
 
-        # test neighbor creation
-        self.neigh_entry = sai_thrift_neighbor_entry_t(
-            self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
-        self.neigh = sai_thrift_create_neighbor_entry(
-            self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:66')
+
 
         # test route creation
         self.route0 = sai_thrift_route_entry_t(
