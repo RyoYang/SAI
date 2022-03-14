@@ -62,12 +62,12 @@ class FrameworkTester(PlatformSaiHelper):
             ip=sai_ipaddress('10.10.10.1'))
         self.nhop_list.append(self.nhop)
 
-        self.nhop1 = sai_thrift_create_next_hop(
-            self.client,
-            type=SAI_NEXT_HOP_TYPE_IP,
-            router_interface_id=self.port10_rif,
-            ip=sai_ipaddress('4444::1'))
-        self.nhop_list.append(self.nhop1)
+        # self.nhop1 = sai_thrift_create_next_hop(
+        #     self.client,
+        #     type=SAI_NEXT_HOP_TYPE_IP,
+        #     router_interface_id=self.port10_rif,
+        #     ip=sai_ipaddress('4444::1'))
+        # self.nhop_list.append(self.nhop1)
         pdb.set_trace()
 
 
