@@ -151,6 +151,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     continue
 
                 route_entry = sai_thrift_route_entry_t(
+                    switch_id=self.switch_id,
                     vr_id=self.default_vrf,
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
