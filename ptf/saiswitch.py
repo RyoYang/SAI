@@ -85,7 +85,7 @@ def generate_mac_list(no_of_addr):
 
 
 @group("draft")
-class SwitchAttrTest(PlatformPlatformSaiHelper):
+class SwitchAttrTest(PlatformSaiHelper):
     '''
     Switch attributes tests
     '''
@@ -1271,7 +1271,7 @@ class SwitchAttrTest(PlatformPlatformSaiHelper):
 
 
 @group("draft")
-class SwitchVxlanTest(PlatformPlatformSaiHelper):
+class SwitchVxlanTest(PlatformSaiHelper):
     '''
     Switch VXLAN attributes tests
     '''
@@ -1572,7 +1572,7 @@ class SwitchVxlanTest(PlatformPlatformSaiHelper):
 
 
 @group("draft")
-class SwitchDefaultVlanTest(PlatformPlatformSaiHelper):
+class SwitchDefaultVlanTest(PlatformSaiHelper):
     """
     The class runs VLAN test cases for default vlan returned by SAI
     """
