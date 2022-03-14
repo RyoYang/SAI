@@ -23,7 +23,7 @@ from ptf.testutils import *
 
 from sai_base_test import *
 
-
+import pdb
 class FrameworkTester(PlatformSaiHelper):
     """
     Test auto-generated framework itself
@@ -53,7 +53,7 @@ class FrameworkTester(PlatformSaiHelper):
             self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
         self.neigh = sai_thrift_create_neighbor_entry(
             self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:66')
-            
+
         # test nhop creation
         self.nhop = sai_thrift_create_next_hop(
             self.client,
@@ -68,7 +68,7 @@ class FrameworkTester(PlatformSaiHelper):
             router_interface_id=self.port10_rif,
             ip=sai_ipaddress('4444::1'))
         self.nhop_list.append(self.nhop1)
-
+        pdb.set_trace()
 
 
         # test route creation
