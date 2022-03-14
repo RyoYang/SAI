@@ -24,7 +24,7 @@ from ptf.testutils import *
 from sai_base_test import *
 
 
-class FrameworkTester(SaiHelper):
+class FrameworkTester(PlatformSaiHelper):
     """
     Test auto-generated framework itself
     The intention of this test is to check if basic features works as expected
