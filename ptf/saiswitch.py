@@ -129,6 +129,8 @@ class SwitchAttrTest(PlatformSaiHelper):
         mask = '/32'
         ip_add = generate_ip_addr(max_route_entry + 100)
         try:
+            print(sai_ipaddress('10.10.10.1'))
+            print(self.port10_rif)
             nhop = sai_thrift_create_next_hop(
                 self.client,
                 ip=sai_ipaddress('10.10.10.1'),
