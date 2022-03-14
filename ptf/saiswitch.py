@@ -155,7 +155,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
-
+                print("status: %".format(status))
                 if status == SAI_STATUS_SUCCESS:
                     routes.update({str(ip_p_m): route_entry})
                     route_number += 1
