@@ -147,8 +147,12 @@ class SwitchAttrTest(PlatformSaiHelper):
 
                 # check if ip repeat, then get next ip
                 if str(ip_p_m) in routes:
+                    print(str(ip_p_m))
+                    print(routes)
                     continue
-
+                attr = sai_thrift_get_switch_attribute(
+                    self.client, available_ipv4_route_entry=True)
+                print(attr["available_ipv4_route_entry"])
                 route_entry = sai_thrift_route_entry_t(
                     switch_id=self.switch_id,
                     vr_id=sai_thrift_create_virtual_router(self.client),
