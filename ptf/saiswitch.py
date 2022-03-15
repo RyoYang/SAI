@@ -144,11 +144,11 @@ class SwitchAttrTest(PlatformSaiHelper):
             max_host_route = 0
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
-
+                print(route_number)
+                print(max_route_entry)
+                print(ip_p_m)
                 # check if ip repeat, then get next ip
                 if str(ip_p_m) in routes:
-                    print(str(ip_p_m))
-                    print(routes)
                     continue
                 attr = sai_thrift_get_switch_attribute(
                     self.client, available_ipv4_route_entry=True)
