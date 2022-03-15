@@ -173,6 +173,9 @@ class SwitchAttrTest(PlatformSaiHelper):
 
                 attr = sai_thrift_get_switch_attribute(
                     self.client, available_ipv4_route_entry=True)
+                print(attr["available_ipv4_route_entry"])
+                print(max_route_entry)
+                print(route_number)
                 self.assertEqual(attr["available_ipv4_route_entry"],
                                  max_route_entry - route_number)
 
