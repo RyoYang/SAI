@@ -99,7 +99,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.available_v6_host_routes = None
 
     def runTest(self):
-        self.availableIPv4RouteEntryTest()
+        # self.availableIPv4RouteEntryTest()
         self.availableIPv6RouteEntryTest()
         self.availableIPv4NexthopEntryTest()
         self.availableIPv6NexthopEntryTest()
@@ -146,9 +146,6 @@ class SwitchAttrTest(PlatformSaiHelper):
             route_number += 1
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
-                print(route_number)
-                print(max_route_entry)
-                print(ip_p_m)
                 # check if ip repeat, then get next ip
                 if str(ip_p_m) in routes:
                     continue
@@ -211,6 +208,10 @@ class SwitchAttrTest(PlatformSaiHelper):
         mask = '/128'
         ip_add = generate_ip_addr(max_route_entry + 100, ipv6=True)
         try:
+            self.neigh_entry = sai_thrift_neighbor_entry_t(
+                self.switch_id, self.port10_rif, sai_ipaddress('2001:0db8:1::1'))
+            self.neigh = sai_thrift_create_neighbor_entry(
+                self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
             nhop = sai_thrift_create_next_hop(
                 self.client,
                 ip=sai_ipaddress('2001:0db8:1::1'),
@@ -220,6 +221,8 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
+            vr_id = sai_thrift_create_virtual_router(self.client)
+            route_number += 1
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
 
@@ -228,7 +231,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     continue
 
                 route_entry = sai_thrift_route_entry_t(
-                    vr_id=self.default_vrf,
+                    vr_id=vr_id,
                     destination=ip_p_m)
 
                 status = sai_thrift_create_route_entry(
