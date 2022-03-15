@@ -152,7 +152,6 @@ class SwitchAttrTest(PlatformSaiHelper):
                     continue
 
                 route_entry = sai_thrift_route_entry_t(
-                    switch_id=self.switch_id,
                     vr_id=sai_thrift_create_virtual_router(self.client),
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
@@ -160,7 +159,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                 attr = sai_thrift_get_switch_attribute(
                     self.client, available_ipv4_route_entry=True)
                 print(attr["available_ipv4_route_entry"])
-                
+
                 print("status: {}".format(status))
                 if status == SAI_STATUS_SUCCESS:
                     routes.update({str(ip_p_m): route_entry})
