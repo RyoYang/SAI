@@ -154,6 +154,9 @@ class SwitchAttrTest(PlatformSaiHelper):
                 route_entry = sai_thrift_route_entry_t(
                     vr_id=sai_thrift_create_virtual_router(self.client),
                     destination=ip_p_m)
+                attr = sai_thrift_get_switch_attribute(
+                    self.client, available_ipv4_route_entry=True)
+                print(attr["available_ipv4_route_entry"])
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
                 attr = sai_thrift_get_switch_attribute(
@@ -229,7 +232,6 @@ class SwitchAttrTest(PlatformSaiHelper):
                 route_entry = sai_thrift_route_entry_t(
                     vr_id=self.default_vrf,
                     destination=ip_p_m)
-                print(route_entry)
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
 
