@@ -142,7 +142,8 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
-            # vr_id = sai_thrift_create_virtual_router(self.client)
+            vr_id = sai_thrift_create_virtual_router(self.client)
+            route_number += 1
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
                 print(route_number)
@@ -152,7 +153,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                 if str(ip_p_m) in routes:
                     continue
                 route_entry = sai_thrift_route_entry_t(
-                    switch_id = self.switch_id,
+                    vr_id = vr_id,
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
