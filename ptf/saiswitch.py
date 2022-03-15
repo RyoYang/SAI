@@ -100,7 +100,7 @@ class SwitchAttrTest(PlatformSaiHelper):
 
     def runTest(self):
         # self.availableIPv4RouteEntryTest()
-        self.availableIPv6RouteEntryTest()
+        # self.availableIPv6RouteEntryTest()
         self.availableIPv4NexthopEntryTest()
         self.availableIPv6NexthopEntryTest()
         self.availableIPv4NeighborEntryTest()
@@ -293,7 +293,10 @@ class SwitchAttrTest(PlatformSaiHelper):
 
                 if str(ip_p) in nhop:
                     continue
-
+                self.neigh_entry = sai_thrift_neighbor_entry_t(
+                    self.switch_id, self.port10_rif, ip_p)
+                self.neigh = sai_thrift_create_neighbor_entry(
+                    self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
                 nexthop = sai_thrift_create_next_hop(
                     self.client,
                     ip=ip_p,
@@ -334,7 +337,10 @@ class SwitchAttrTest(PlatformSaiHelper):
 
                 if str(ip_p) in nhop:
                     continue
-
+                self.neigh_entry = sai_thrift_neighbor_entry_t(
+                    self.switch_id, self.port10_rif, ip_p)
+                self.neigh = sai_thrift_create_neighbor_entry(
+                    self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
                 nexthop = sai_thrift_create_next_hop(
                     self.client,
                     ip=ip_p,
