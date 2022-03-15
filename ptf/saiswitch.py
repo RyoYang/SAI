@@ -288,6 +288,8 @@ class SwitchAttrTest(PlatformSaiHelper):
         ip_add = generate_ip_addr(max_nhop_entry + 100)
         try:
             nhop_number = 0
+            mac_list = generate_mac_list(max_nhop_entry)
+            idx = 0
             while nhop_number < max_nhop_entry:
                 ip_p = sai_ipaddress(next(ip_add))
 
@@ -296,7 +298,8 @@ class SwitchAttrTest(PlatformSaiHelper):
                 self.neigh_entry = sai_thrift_neighbor_entry_t(
                     self.switch_id, self.port10_rif, ip_p)
                 self.neigh = sai_thrift_create_neighbor_entry(
-                    self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
+                    self.client, self.neigh_entry, dst_mac_address=mac_list[idx])
+                    idx += 1
                 nexthop = sai_thrift_create_next_hop(
                     self.client,
                     ip=ip_p,
