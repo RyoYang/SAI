@@ -152,7 +152,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     continue
 
                 route_entry = sai_thrift_route_entry_t(
-                    vr_id=sai_thrift_create_virtual_router(self.client),
+                    vr_id=self.default_vrf,
                     destination=ip_p_m)
                 attr = sai_thrift_get_switch_attribute(
                     self.client, available_ipv4_route_entry=True)
