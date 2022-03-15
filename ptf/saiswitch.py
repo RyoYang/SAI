@@ -129,11 +129,10 @@ class SwitchAttrTest(PlatformSaiHelper):
         mask = '/32'
         ip_add = generate_ip_addr(max_route_entry + 100)
         try:
-
             self.neigh_entry = sai_thrift_neighbor_entry_t(
                 self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
             self.neigh = sai_thrift_create_neighbor_entry(
-                self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:66')
+                self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
             nhop = sai_thrift_create_next_hop(
                 self.client,
                 ip=sai_ipaddress('10.10.10.1'),
@@ -152,7 +151,7 @@ class SwitchAttrTest(PlatformSaiHelper):
 
                 route_entry = sai_thrift_route_entry_t(
                     switch_id=self.switch_id,
-                    vr_id=self.default_vrf,
+                    vr_id=sai_thrift_create_virtual_router(self.client),
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
