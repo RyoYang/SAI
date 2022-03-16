@@ -101,8 +101,8 @@ class SwitchAttrTest(PlatformSaiHelper):
     def runTest(self):
         # self.availableIPv4RouteEntryTest()
         # self.availableIPv6RouteEntryTest()
-        self.availableIPv4NexthopEntryTest()
-        self.availableIPv6NexthopEntryTest()
+        # self.availableIPv4NexthopEntryTest()
+        # self.availableIPv6NexthopEntryTest()
         self.availableIPv4NeighborEntryTest()
         self.availableIPv6NeighborEntryTest()
         self.availableNexthopGroupEntryTest()
