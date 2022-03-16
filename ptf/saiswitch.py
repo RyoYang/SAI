@@ -664,7 +664,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                       % (stage, avail_num))
 
                 acl_table_list = []
-                for _ in range(1, avail_num + 1):
+                for table_number in range(1, avail_num + 1):
                     acl_table = sai_thrift_create_acl_table(
                         self.client,
                         acl_stage=stage,
