@@ -24,6 +24,7 @@ from lpm import LpmDict
 
 from sai_base_test import *
 
+import pdb
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(THIS_DIR, '..'))
 
@@ -613,6 +614,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     switch_id=self.switch_id,
                     mac_address=mac_list[fdb_number - 1],
                     bv_id=self.vlan10)
+                pdb.set_trace()
                 status = sai_thrift_create_fdb_entry(
                     self.client,
                     fdb_entry,
