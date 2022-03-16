@@ -106,7 +106,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.availableIPv4NeighborEntryTest()
         # self.availableIPv6NeighborEntryTest()
         # self.availableNexthopGroupEntryTest()
-        self.availableNexthopGroupMemberEntryTest()
+        # self.availableNexthopGroupMemberEntryTest()
         self.availableFdbEntryTest()
         self.availableAclTableTest()
         self.readOnlyAttributesTest()
