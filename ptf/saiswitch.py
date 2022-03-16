@@ -619,6 +619,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     type=SAI_FDB_ENTRY_TYPE_STATIC,
                     bridge_port_id=self.port0_bp,
                     packet_action=SAI_PACKET_ACTION_FORWARD)
+                print(status)
                 self.assertEqual(status, SAI_STATUS_SUCCESS)
                 fdb.append(fdb_entry)
 
