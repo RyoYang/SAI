@@ -610,11 +610,17 @@ class SwitchAttrTest(PlatformSaiHelper):
         fdb = []
         try:
             for fdb_number in range(1, available_fdb_entry + 1):
+                self.vlan_id = 10
+                self.vlan_oid = sai_thrift_create_vlan(self.client, vlan_id=self.vlan_id)
+                self.assertNotEqual(self.vlan_oid, 0)
+                self.vlan_member = sai_thrift_create_vlan_member(
+                self.client, vlan_id=self.vlan_oid, bridge_port_id=self.port0_bp, vlan_tagging_mode=SAI_VLAN_TAGGING_MODE_UNTAGGED)
+                sai_thrift_set_port_attribute(self.client, port_oid=self.port0, port_vlan_id=self.vlan_id)
                 fdb_entry = sai_thrift_fdb_entry_t(
                     switch_id=self.switch_id,
                     mac_address=mac_list[fdb_number - 1],
-                    bv_id=self.vlan10)
-                pdb.set_trace()
+                    bv_id=self.vlan_oid)
+                # pdb.set_trace()
                 status = sai_thrift_create_fdb_entry(
                     self.client,
                     fdb_entry,
