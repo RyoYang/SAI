@@ -1200,7 +1200,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     vr_id=self.default_vrf,
                     data=nat_data,
                     nat_type=SAI_NAT_TYPE_SOURCE_NAT)
-                sai_thrift_set_switch_attribute(self.client, nat_enable=True)
+                sai_thrift_set_switch_attribute(self.client, nat_enable=true)
                 status = sai_thrift_create_nat_entry(
                     self.client, snat, nat_type=SAI_NAT_TYPE_SOURCE_NAT)
                 self.assertEqual(status, SAI_STATUS_SUCCESS)
@@ -1266,7 +1266,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     vr_id=self.default_vrf,
                     data=nat_data,
                     nat_type=SAI_NAT_TYPE_DESTINATION_NAT)
-
+                sai_thrift_set_switch_attribute(self.client, nat_enable=True)
                 status = sai_thrift_create_nat_entry(
                     self.client, dnat, nat_type=SAI_NAT_TYPE_DESTINATION_NAT)
                 self.assertEqual(status, SAI_STATUS_SUCCESS)
