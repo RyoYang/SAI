@@ -610,6 +610,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         fdb = []
         try:
             for fdb_number in range(1, available_fdb_entry + 1):
+                self.create_bridge_ports()
                 self.vlan_id = 10
                 self.vlan_oid = sai_thrift_create_vlan(self.client, vlan_id=self.vlan_id)
                 self.assertNotEqual(self.vlan_oid, 0)
