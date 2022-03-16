@@ -559,6 +559,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                         ip=ip_p,
                         router_interface_id=self.port10_rif,
                         type=SAI_NEXT_HOP_TYPE_IP)
+                    print(nexthop)
                     self.assertNotEqual(nexthop, SAI_NULL_OBJECT_ID)
                     nhop.update({str(ip_p): nexthop})
                     nhop_per_group_number += 1
