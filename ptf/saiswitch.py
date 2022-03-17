@@ -958,13 +958,12 @@ class SwitchAttrTest(PlatformSaiHelper):
             self.assertNotEqual(attr["lag_hash"], 0)
             self.assertNotEqual(attr["SAI_SWITCH_ATTR_LAG_HASH"], 0)
 
-        if self.platform == 'brcm':
-            attr = sai_thrift_get_switch_attribute(self.client,
-                                                max_acl_action_count=True)
-            print(attr)
-            self.assertNotEqual(attr["max_acl_action_count"], 0)
-            self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_ACTION_COUNT"], 0)
-            max_acl_action_count = attr["max_acl_action_count"]
+        attr = sai_thrift_get_switch_attribute(self.client,
+                                            max_acl_action_count=True)
+        print(attr)
+        self.assertNotEqual(attr["max_acl_action_count"], 0)
+        self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_ACTION_COUNT"], 0)
+        max_acl_action_count = attr["max_acl_action_count"]
 
         if not self.platform == 'brcm':
             attr = sai_thrift_get_switch_attribute(self.client,
@@ -982,11 +981,12 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["acl_capability"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_ACL_CAPABILITY"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               max_mirror_session=True)
-        print(attr)
-        self.assertNotEqual(attr["max_mirror_session"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_MIRROR_SESSION"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                max_mirror_session=True)
+            print(attr)
+            self.assertNotEqual(attr["max_mirror_session"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_MIRROR_SESSION"], 0)
 
         if not self.platform == 'brcm':
             attr = sai_thrift_get_switch_attribute(self.client,
