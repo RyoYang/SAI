@@ -100,7 +100,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.available_v6_host_routes = None
 
     def runTest(self):
-        # self.availableIPv4RouteEntryTest()
+        self.availableIPv4RouteEntryTest()
         # self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
@@ -110,8 +110,9 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.availableNexthopGroupMemberEntryTest()
         # self.availableFdbEntryTest()
         # self.availableAclTableTest()
-        # self.readOnlyAttributesTest()
-        self.refreshIntervalTest()
+        self.readOnlyAttributesTest()
+        if not self.platform == 'brcm': #brcm sdk NOT_IMPLEMENTED_0
+            self.refreshIntervalTest()
         # self.availableSnatEntryTest()
         # self.availableDnatEntryTest()
 
@@ -143,15 +144,16 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
-            vr_id = sai_thrift_create_virtual_router(self.client)
-            route_number += 1
+            # vr_id = sai_thrift_create_virtual_router(self.client)
+            # route_number += 1
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
                 # check if ip repeat, then get next ip
                 if str(ip_p_m) in routes:
                     continue
                 route_entry = sai_thrift_route_entry_t(
-                    vr_id = vr_id,
+                    switch_id=self.switch_id,
+                    vr_id = self.default_vrf,
                     destination=ip_p_m)
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
