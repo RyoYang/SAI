@@ -110,8 +110,8 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.availableNexthopGroupMemberEntryTest()
         # self.availableFdbEntryTest()
         # self.availableAclTableTest()
-        self.readOnlyAttributesTest()
-        # self.refreshIntervalTest()
+        # self.readOnlyAttributesTest()
+        self.refreshIntervalTest()
         # self.availableSnatEntryTest()
         # self.availableDnatEntryTest()
 
