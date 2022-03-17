@@ -414,9 +414,10 @@ class SwitchAttrTest(PlatformSaiHelper):
                 self.assertEqual(status, SAI_STATUS_SUCCESS)
                 nbrs.update({str(ip_p): nbr_entry})
                 nbr_number += 1
-
+                
                 attr = sai_thrift_get_switch_attribute(
                     self.client, available_ipv4_neighbor_entry=True)
+                print("available_ipv4_neighbor_entry: {}, available_nbr_entry: {}, nbr_number: {} ".format(attr["available_ipv4_neighbor_entry"], available_nbr_entry, nbr_number))
                 self.assertEqual(attr["available_ipv4_neighbor_entry"],
                                  available_nbr_entry - nbr_number,
                                  "Failed after %d entries" % nbr_number)
