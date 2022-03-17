@@ -104,7 +104,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
-        # self.availableIPv4NeighborEntryTest()
+        self.availableIPv4NeighborEntryTest()
         # self.availableIPv6NeighborEntryTest()
         # self.availableNexthopGroupEntryTest()
         # self.availableNexthopGroupMemberEntryTest()
@@ -144,18 +144,15 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
-            vr_id = sai_thrift_create_virtual_router(self.client)
-            route_entry = sai_thrift_route_entry_t(
-                switch_id=self.switch_id,
-                vr_id = self.default_vrf,
-                destination=sai_ipprefix('0.0.0.0/0'))
-            # pdb.set_trace()
-            status = sai_thrift_create_route_entry(
-                self.client, route_entry, next_hop_id=nhop)
-            attr = sai_thrift_get_switch_attribute(
-                self.client, available_ipv4_route_entry=True)
+
+            # For brcm platform: First route in a VRF has to be a default route
+            if self.platform == 'brcm':
+                route_entry = sai_thrift_route_entry_t(
+                    switch_id=self.switch_id,
+                    vr_id = self.default_vrf,
+                    destination=sai_ipprefix('0.0.0.0/0'))
             route_number += 1
-            route_number += 1
+
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
                 # check if ip repeat, then get next ip
@@ -189,7 +186,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     self.client, available_ipv4_route_entry=True)
                 self.assertEqual(attr["available_ipv4_route_entry"],
                                  max_route_entry - route_number)
-
+            self.available_v4_host_routes = route_number
             print("%s LPM routes have been created"
                   % (max_route_entry - max_host_route))
             self.assertEqual(attr["available_ipv4_route_entry"], 0)
