@@ -155,6 +155,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                     switch_id=self.switch_id,
                     vr_id = self.default_vrf,
                     destination=ip_p_m)
+                pdb.set_trace()
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
                 attr = sai_thrift_get_switch_attribute(
