@@ -958,7 +958,7 @@ class SwitchAttrTest(PlatformSaiHelper):
             self.assertNotEqual(attr["lag_hash"], 0)
             self.assertNotEqual(attr["SAI_SWITCH_ATTR_LAG_HASH"], 0)
 
-        if not self.platform == 'brcm':
+        if self.platform == 'brcm':
             attr = sai_thrift_get_switch_attribute(self.client,
                                                 max_acl_action_count=True)
             print(attr)
