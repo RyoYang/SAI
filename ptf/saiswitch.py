@@ -833,12 +833,13 @@ class SwitchAttrTest(PlatformSaiHelper):
             self.assertEqual(
                 attr["SAI_SWITCH_ATTR_ACL_TABLE_MINIMUM_PRIORITY"], 0)
 
-        attr = sai_thrift_get_switch_attribute(
-            self.client, acl_table_maximum_priority=True)
-        print(attr)
-        self.assertNotEqual(attr["acl_table_maximum_priority"], 0)
-        self.assertNotEqual(
-            attr["SAI_SWITCH_ATTR_ACL_TABLE_MAXIMUM_PRIORITY"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(
+                self.client, acl_table_maximum_priority=True)
+            print(attr)
+            self.assertNotEqual(attr["acl_table_maximum_priority"], 0)
+            self.assertNotEqual(
+                attr["SAI_SWITCH_ATTR_ACL_TABLE_MAXIMUM_PRIORITY"], 0)
 
         attr = sai_thrift_get_switch_attribute(self.client,
                                                acl_entry_minimum_priority=True)
