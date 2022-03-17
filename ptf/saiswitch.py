@@ -144,8 +144,8 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
-            # vr_id = sai_thrift_create_virtual_router(self.client)
-            # route_number += 1
+            vr_id = sai_thrift_create_virtual_router(self.client)
+            route_number += 1
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
                 # check if ip repeat, then get next ip
