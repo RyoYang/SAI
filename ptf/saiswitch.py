@@ -110,10 +110,10 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.availableNexthopGroupMemberEntryTest()
         # self.availableFdbEntryTest()
         # self.availableAclTableTest()
-        # self.readOnlyAttributesTest()
+        self.readOnlyAttributesTest()
         # self.refreshIntervalTest()
         # self.availableSnatEntryTest()
-        self.availableDnatEntryTest()
+        # self.availableDnatEntryTest()
 
     def availableIPv4RouteEntryTest(self):
         '''
@@ -720,12 +720,13 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_ACTIVE_PORTS"], 0)
         active_ports = attr["number_of_active_ports"]
 
-        attr = sai_thrift_get_switch_attribute(
-            self.client, max_number_of_supported_ports=True)
-        print(attr)
-        self.assertNotEqual(attr["max_number_of_supported_ports"], 0)
-        self.assertNotEqual(
-            attr["SAI_SWITCH_ATTR_MAX_NUMBER_OF_SUPPORTED_PORTS"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(
+                self.client, max_number_of_supported_ports=True)
+            print(attr)
+            self.assertNotEqual(attr["max_number_of_supported_ports"], 0)
+            self.assertNotEqual(
+                attr["SAI_SWITCH_ATTR_MAX_NUMBER_OF_SUPPORTED_PORTS"], 0)
 
         attr = sai_thrift_get_switch_attribute(
             self.client,
@@ -734,10 +735,11 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["port_list"].count, 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_PORT_LIST"].count, 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client, port_max_mtu=True)
-        print(attr)
-        self.assertNotEqual(attr["port_max_mtu"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_PORT_MAX_MTU"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client, port_max_mtu=True)
+            print(attr)
+            self.assertNotEqual(attr["port_max_mtu"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_PORT_MAX_MTU"], 0)
 
         attr = sai_thrift_get_switch_attribute(self.client, cpu_port=True)
         print(attr)
@@ -750,23 +752,26 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["max_virtual_routers"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_VIRTUAL_ROUTERS"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               fdb_table_size=True)
-        print(attr)
-        self.assertNotEqual(attr["fdb_table_size"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_FDB_TABLE_SIZE"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                fdb_table_size=True)
+            print(attr)
+            self.assertNotEqual(attr["fdb_table_size"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_FDB_TABLE_SIZE"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               l3_neighbor_table_size=True)
-        print(attr)
-        self.assertNotEqual(attr["l3_neighbor_table_size"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_L3_NEIGHBOR_TABLE_SIZE"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                    l3_neighbor_table_size=True)
+            print(attr)
+            self.assertNotEqual(attr["l3_neighbor_table_size"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_L3_NEIGHBOR_TABLE_SIZE"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               l3_route_table_size=True)
-        print(attr)
-        self.assertNotEqual(attr["l3_route_table_size"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_L3_ROUTE_TABLE_SIZE"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                l3_route_table_size=True)
+            print(attr)
+            self.assertNotEqual(attr["l3_route_table_size"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_L3_ROUTE_TABLE_SIZE"], 0)
 
         attr = sai_thrift_get_switch_attribute(self.client, lag_members=True)
         print(attr)
@@ -790,31 +795,35 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["number_of_ecmp_groups"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_ECMP_GROUPS"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               number_of_unicast_queues=True)
-        print(attr)
-        self.assertNotEqual(attr["number_of_unicast_queues"], 0)
-        self.assertNotEqual(
-            attr["SAI_SWITCH_ATTR_NUMBER_OF_UNICAST_QUEUES"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                number_of_unicast_queues=True)
+            print(attr)
+            self.assertNotEqual(attr["number_of_unicast_queues"], 0)
+            self.assertNotEqual(
+                attr["SAI_SWITCH_ATTR_NUMBER_OF_UNICAST_QUEUES"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               number_of_multicast_queues=True)
-        print(attr)
-        self.assertNotEqual(attr["number_of_multicast_queues"], 0)
-        self.assertNotEqual(
-            attr["SAI_SWITCH_ATTR_NUMBER_OF_MULTICAST_QUEUES"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                number_of_multicast_queues=True)
+            print(attr)
+            self.assertNotEqual(attr["number_of_multicast_queues"], 0)
+            self.assertNotEqual(
+                attr["SAI_SWITCH_ATTR_NUMBER_OF_MULTICAST_QUEUES"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               number_of_queues=True)
-        print(attr)
-        self.assertNotEqual(attr["number_of_queues"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_QUEUES"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                number_of_queues=True)
+            print(attr)
+            self.assertNotEqual(attr["number_of_queues"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_QUEUES"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               number_of_cpu_queues=True)
-        print(attr)
-        self.assertNotEqual(attr["number_of_cpu_queues"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_CPU_QUEUES"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                number_of_cpu_queues=True)
+            print(attr)
+            self.assertNotEqual(attr["number_of_cpu_queues"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_CPU_QUEUES"], 0)
 
         attr = sai_thrift_get_switch_attribute(self.client,
                                                acl_table_minimum_priority=True)
@@ -849,12 +858,13 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["default_vlan_id"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_DEFAULT_VLAN_ID"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               default_stp_inst_id=True)
-        print(attr)
-        self.assertEqual(attr["default_stp_inst_id"], SAI_NULL_OBJECT_ID)
-        self.assertEqual(
-            attr["SAI_SWITCH_ATTR_DEFAULT_STP_INST_ID"], SAI_NULL_OBJECT_ID)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                default_stp_inst_id=True)
+            print(attr)
+            self.assertEqual(attr["default_stp_inst_id"], SAI_NULL_OBJECT_ID)
+            self.assertEqual(
+                attr["SAI_SWITCH_ATTR_DEFAULT_STP_INST_ID"], SAI_NULL_OBJECT_ID)
 
         attr = sai_thrift_get_switch_attribute(self.client,
                                                max_stp_instance=True)
@@ -934,29 +944,32 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["egress_buffer_pool_num"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_EGRESS_BUFFER_POOL_NUM"], 0)
 
-        not supported
-        attr = sai_thrift_get_switch_attribute(self.client, ecmp_hash=True)
-        print(attr)
-        self.assertNotEqual(attr["ecmp_hash"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_ECMP_HASH"], 0)
+        # not supported
+        # attr = sai_thrift_get_switch_attribute(self.client, ecmp_hash=True)
+        # print(attr)
+        # self.assertNotEqual(attr["ecmp_hash"], 0)
+        # self.assertNotEqual(attr["SAI_SWITCH_ATTR_ECMP_HASH"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client, lag_hash=True)
-        print(attr)
-        self.assertNotEqual(attr["lag_hash"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_LAG_HASH"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client, lag_hash=True)
+            print(attr)
+            self.assertNotEqual(attr["lag_hash"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_LAG_HASH"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               max_acl_action_count=True)
-        print(attr)
-        self.assertNotEqual(attr["max_acl_action_count"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_ACTION_COUNT"], 0)
-        max_acl_action_count = attr["max_acl_action_count"]
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                max_acl_action_count=True)
+            print(attr)
+            self.assertNotEqual(attr["max_acl_action_count"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_ACTION_COUNT"], 0)
+            max_acl_action_count = attr["max_acl_action_count"]
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               max_acl_range_count=True)
-        print(attr)
-        self.assertNotEqual(attr["max_acl_range_count"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_RANGE_COUNT"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                max_acl_range_count=True)
+            print(attr)
+            self.assertNotEqual(attr["max_acl_range_count"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_ACL_RANGE_COUNT"], 0)
 
         s32 = sai_thrift_s32_list_t(int32list=[], count=max_acl_action_count)
         cap = sai_thrift_acl_capability_t(action_list=s32)
@@ -973,23 +986,26 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.assertNotEqual(attr["max_mirror_session"], 0)
         self.assertNotEqual(attr["SAI_SWITCH_ATTR_MAX_MIRROR_SESSION"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               default_trap_group=True)
-        print(attr)
-        self.assertNotEqual(attr["default_trap_group"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_DEFAULT_TRAP_GROUP"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                default_trap_group=True)
+            print(attr)
+            self.assertNotEqual(attr["default_trap_group"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_DEFAULT_TRAP_GROUP"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               acl_stage_ingress=cap)
-        print(attr)
-        self.assertNotEqual(attr["acl_stage_ingress"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_ACL_STAGE_INGRESS"], 0)
-
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               acl_stage_egress=cap)
-        print(attr)
-        self.assertNotEqual(attr["acl_stage_egress"], 0)
-        self.assertNotEqual(attr["SAI_SWITCH_ATTR_ACL_STAGE_EGRESS"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                acl_stage_ingress=cap)
+            print(attr)
+            self.assertNotEqual(attr["acl_stage_ingress"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_ACL_STAGE_INGRESS"], 0)
+        
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                acl_stage_egress=cap)
+            print(attr)
+            self.assertNotEqual(attr["acl_stage_egress"], 0)
+            self.assertNotEqual(attr["SAI_SWITCH_ATTR_ACL_STAGE_EGRESS"], 0)
 
     def refreshIntervalTest(self):
         '''
