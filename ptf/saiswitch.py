@@ -825,12 +825,13 @@ class SwitchAttrTest(PlatformSaiHelper):
             self.assertNotEqual(attr["number_of_cpu_queues"], 0)
             self.assertNotEqual(attr["SAI_SWITCH_ATTR_NUMBER_OF_CPU_QUEUES"], 0)
 
-        attr = sai_thrift_get_switch_attribute(self.client,
-                                               acl_table_minimum_priority=True)
-        print(attr)
-        self.assertEqual(attr["acl_table_minimum_priority"], 0)
-        self.assertEqual(
-            attr["SAI_SWITCH_ATTR_ACL_TABLE_MINIMUM_PRIORITY"], 0)
+        if not self.platform == 'brcm':
+            attr = sai_thrift_get_switch_attribute(self.client,
+                                                acl_table_minimum_priority=True)
+            print(attr)
+            self.assertEqual(attr["acl_table_minimum_priority"], 0)
+            self.assertEqual(
+                attr["SAI_SWITCH_ATTR_ACL_TABLE_MINIMUM_PRIORITY"], 0)
 
         attr = sai_thrift_get_switch_attribute(
             self.client, acl_table_maximum_priority=True)
