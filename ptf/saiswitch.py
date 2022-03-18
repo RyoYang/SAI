@@ -130,73 +130,75 @@ class SwitchAttrTest(PlatformSaiHelper):
         routes = dict()
         mask = '/32'
         ip_add = generate_ip_addr(max_route_entry + 100)
-        # try:
-        #     self.neigh_entry = sai_thrift_neighbor_entry_t(
-        #         self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
-        #     self.neigh = sai_thrift_create_neighbor_entry(
-        #         self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
-        #     nhop = sai_thrift_create_next_hop(
-        #         self.client,
-        #         ip=sai_ipaddress('10.10.10.1'),
-        #         router_interface_id=self.port10_rif,
-        #         type=SAI_NEXT_HOP_TYPE_IP)
-        #     self.assertNotEqual(nhop, SAI_NULL_OBJECT_ID)
+        try:
+            self.neigh_entry = sai_thrift_neighbor_entry_t(
+                self.switch_id, self.port10_rif, sai_ipaddress('10.10.10.1'))
+            self.neigh = sai_thrift_create_neighbor_entry(
+                self.client, self.neigh_entry, dst_mac_address='00:11:22:33:44:55')
+            nhop = sai_thrift_create_next_hop(
+                self.client,
+                ip=sai_ipaddress('10.10.10.1'),
+                router_interface_id=self.port10_rif,
+                type=SAI_NEXT_HOP_TYPE_IP)
+            self.assertNotEqual(nhop, SAI_NULL_OBJECT_ID)
+                
+            route_number = 0
+            max_host_route = 0
 
-        #     route_number = 0
-        #     max_host_route = 0
+            # For brcm platform: First route in a VRF has to be a default route
+            if self.platform == 'brcm':
+                route_entry = sai_thrift_route_entry_t(
+                    switch_id=self.switch_id,
+                    vr_id = self.default_vrf,
+                    destination=sai_ipprefix('0.0.0.0/0'))
+                status = sai_thrift_create_route_entry(
+                    self.client, route_entry, next_hop_id=nhop)
+                self.assertEqual(status, SAI_STATUS_SUCCESS)
+                route_number += 1
 
-        #     # For brcm platform: First route in a VRF has to be a default route
-        #     if self.platform == 'brcm':
-        #         route_entry = sai_thrift_route_entry_t(
-        #             switch_id=self.switch_id,
-        #             vr_id = self.default_vrf,
-        #             destination=sai_ipprefix('0.0.0.0/0'))
-        #     route_number += 1
+            while route_number < max_route_entry:
+                ip_p_m = sai_ipprefix(next(ip_add) + mask)
+                # check if ip repeat, then get next ip
+                if str(ip_p_m) in routes:
+                    continue
+                route_entry = sai_thrift_route_entry_t(
+                    switch_id=self.switch_id,
+                    vr_id = self.default_vrf,
+                    destination=ip_p_m)
+                status = sai_thrift_create_route_entry(
+                    self.client, route_entry, next_hop_id=nhop)
+                attr = sai_thrift_get_switch_attribute(
+                    self.client, available_ipv4_route_entry=True)
+                if status == SAI_STATUS_SUCCESS:
+                    routes.update({str(ip_p_m): route_entry})
+                    route_number += 1
+                elif status == SAI_STATUS_ITEM_ALREADY_EXISTS:
+                    continue
+                elif mask == '/32':  # when host table is full change to LPM
+                    print("%s host routes have been created" % route_number)
+                    max_host_route = route_number
+                    self.available_v4_host_routes = max_host_route
+                    mask = '/30'
+                    continue
+                else:
+                    self.fail("Route creation failed after creating %d "
+                              "entries, status %u" % (route_number, status))
 
-        #     while route_number < max_route_entry:
-        #         ip_p_m = sai_ipprefix(next(ip_add) + mask)
-        #         # check if ip repeat, then get next ip
-        #         if str(ip_p_m) in routes:
-        #             continue
-        #         route_entry = sai_thrift_route_entry_t(
-        #             switch_id=self.switch_id,
-        #             vr_id = self.default_vrf,
-        #             destination=ip_p_m)
-        #         # pdb.set_trace()
-        #         status = sai_thrift_create_route_entry(
-        #             self.client, route_entry, next_hop_id=nhop)
-        #         attr = sai_thrift_get_switch_attribute(
-        #             self.client, available_ipv4_route_entry=True)
-        #         if status == SAI_STATUS_SUCCESS:
-        #             routes.update({str(ip_p_m): route_entry})
-        #             route_number += 1
-        #         elif status == SAI_STATUS_ITEM_ALREADY_EXISTS:
-        #             continue
-        #         elif mask == '/32':  # when host table is full change to LPM
-        #             print("%s host routes have been created" % route_number)
-        #             max_host_route = route_number
-        #             self.available_v4_host_routes = max_host_route
-        #             mask = '/30'
-        #             continue
-        #         else:
-        #             self.fail("Route creation failed after creating %d "
-        #                       "entries, status %u" % (route_number, status))
+                attr = sai_thrift_get_switch_attribute(
+                    self.client, available_ipv4_route_entry=True)
+                self.assertEqual(attr["available_ipv4_route_entry"],
+                                 max_route_entry - route_number)
+            self.available_v4_host_routes = route_number
+            print("%s LPM routes have been created"
+                  % (max_route_entry - max_host_route))
+            self.assertEqual(attr["available_ipv4_route_entry"], 0)
 
-        #         attr = sai_thrift_get_switch_attribute(
-        #             self.client, available_ipv4_route_entry=True)
-        #         self.assertEqual(attr["available_ipv4_route_entry"],
-        #                          max_route_entry - route_number)
-        #     self.available_v4_host_routes = route_number
-        #     print("%s LPM routes have been created"
-        #           % (max_route_entry - max_host_route))
-        #     self.assertEqual(attr["available_ipv4_route_entry"], 0)
+            ip_add.close()
 
-        #     ip_add.close()
-
-        # finally:
-        #     for ip_p_m in routes:
-        #         sai_thrift_remove_route_entry(self.client, routes.get(ip_p_m))
-        #     sai_thrift_remove_next_hop(self.client, nhop)
+        finally:
+            for ip_p_m in routes:
+                sai_thrift_remove_route_entry(self.client, routes.get(ip_p_m))
+            sai_thrift_remove_next_hop(self.client, nhop)
 
     def availableIPv6RouteEntryTest(self):
         '''
@@ -242,7 +244,6 @@ class SwitchAttrTest(PlatformSaiHelper):
                 #  check if ip repeat, then get next ip
                 if str(ip_p_m) in routes:
                     continue
-                # For brcm platform: First route in a VRF has to be a default route
 
                 route_entry = sai_thrift_route_entry_t(
                     vr_id=self.default_vrf,
