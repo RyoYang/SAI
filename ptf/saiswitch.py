@@ -100,7 +100,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.available_v6_host_routes = None
 
     def runTest(self):
-        # self.availableIPv4RouteEntryTest()
+        self.availableIPv4RouteEntryTest()
         self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
