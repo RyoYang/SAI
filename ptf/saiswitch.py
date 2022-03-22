@@ -271,6 +271,56 @@ class AvailableIPv6RouteEntryTest(PlatformSaiHelper):
         self.check_data_creation()
         self.check_amount()
 
+class AvailableNexthopGroupEntryTest(PlatformSaiHelper):
+    def setUp(self):
+        super(AvailableNexthopGroupEntryTest, self).setUp()
+
+    def check_data_creation(self):
+        '''
+        Verifies creation of maximum number of nexthop group entries.
+        '''
+        print("\navailableNexthopGroupEntryTest()")
+
+        attr = sai_thrift_get_switch_attribute(
+            self.client, available_next_hop_group_entry=True)
+        max_nhg_entry = attr["available_next_hop_group_entry"]
+        print("Available nexthop group entries: %d" % max_nhg_entry)
+
+        self.nhg = []
+        for nhg_number in range(1, max_nhg_entry + 1):
+            nexthop_group = sai_thrift_create_next_hop_group(
+                self.client, type=SAI_NEXT_HOP_GROUP_TYPE_ECMP)
+            self.assertNotEqual(nexthop_group, SAI_NULL_OBJECT_ID)
+            self.nhg.append(nexthop_group)
+
+            attr = sai_thrift_get_switch_attribute(
+                self.client, available_next_hop_group_entry=True)
+            self.assertEqual(attr["available_next_hop_group_entry"],
+                                max_nhg_entry - nhg_number)
+
+
+    def tearDown(self):
+        # if nexthop_group != SAI_NULL_OBJECT_ID:
+            # sai_thrift_remove_next_hop(self.client, nexthop_group)
+            # self.fail("Number of available nexthop groups may be exceeded")
+        for nhg_id in self.nhg:
+            sai_thrift_remove_next_hop_group(self.client, nhg_id)
+
+
+    def check_amount(self):
+        attr = sai_thrift_get_switch_attribute(
+            self.client, available_next_hop_group_entry=True)
+        self.assertEqual(attr["available_next_hop_group_entry"], 0)
+
+        nexthop_group = sai_thrift_create_next_hop_group(
+            self.client, type=SAI_NEXT_HOP_GROUP_TYPE_ECMP)
+        self.assertEqual(nexthop_group, SAI_NULL_OBJECT_ID)
+        print("No more nexthop group may be created")
+  
+
+    def runTest(self):
+        self.check_data_creation()
+        self.check_amount()
 
 class SwitchAttrTest(SaiHelper):
     '''
