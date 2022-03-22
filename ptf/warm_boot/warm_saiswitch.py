@@ -71,3 +71,55 @@ class WarmAvailableIPv4RouteEntryTest(AvailableIPv4RouteEntryTest):
     def tearDown_post_start(self):
         print("tearDown_post_start WarmAvailableIPv4RouteEntryTest")
         print("Skip the teardown after warm boot testing")
+
+
+
+class WarmAvailableNexthopGroupEntryTest(AvailableNexthopGroupEntryTest):
+    """
+    Warm boot Test for available IPv4 Route Entry.
+    """
+    @warm_setup
+    def setUp(self):
+        print("setUp WarmAAvailableNexthopGroupEntryTest")
+        AvailableNexthopGroupEntryTest.setUp(self)
+
+
+    def setUp_starting(self):
+        print("Skip setUp_starting WarmAvailableNexthopGroupEntryTest")
+
+
+    def setUp_post_start(self):
+        print("setUp_post_start WarmAvailableNexthopGroupEntryTest")
+        SaiHelperBase.setUp(self)
+
+
+    @warm_test
+    def runTest(self):
+        print("Run test WarmAvailableNexthopGroupEntryTest")
+        super().runTest()
+
+
+    def test_starting(self):
+        print("Skip test_starting WarmAvailableNexthopGroupEntryTest")
+
+
+    def test_post_start(self):
+        print("test_post_start WarmAvailableNexthopGroupEntryTest")
+        super().check_amount()
+
+
+    @warm_teardown
+    def tearDown(self):
+        print("tearDown WarmAvailableNexthopGroupEntryTest")
+        print("Skip the teardown and make a warm shut down for warm boot testing")
+        self.warm_shutdown()
+
+
+    def tearDown_starting(self):
+        print("tearDown_starting WarmAvailableNexthopGroupEntryTest")
+        print("Skip the teardown for warm boot testing")
+
+
+    def tearDown_post_start(self):
+        print("tearDown_post_start WarmAvailableNexthopGroupEntryTest")
+        print("Skip the teardown after warm boot testing")
