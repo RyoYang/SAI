@@ -101,7 +101,7 @@ class SwitchAttrTest(PlatformSaiHelper):
 
     def runTest(self):
         # self.availableIPv4RouteEntryTest()
-        self.availableIPv6RouteEntryTest()
+        # self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
         # self.availableIPv4NeighborEntryTest()
@@ -192,7 +192,7 @@ class SwitchAttrTest(PlatformSaiHelper):
             print("%s LPM routes have been created"
                   % (max_route_entry - max_host_route))
             self.assertEqual(attr["available_ipv4_route_entry"], 0)
-
+            
             ip_add.close()
 
         finally:
@@ -232,7 +232,7 @@ class SwitchAttrTest(PlatformSaiHelper):
                 route_entry = sai_thrift_route_entry_t(
                     switch_id=self.switch_id,
                     vr_id = self.default_vrf,
-                    destination=sai_ipprefix('0.0.0.0/0'))
+                    destination=sai_ipprefix('::/0'))
                 status = sai_thrift_create_route_entry(
                     self.client, route_entry, next_hop_id=nhop)
                 self.assertEqual(status, SAI_STATUS_SUCCESS)
