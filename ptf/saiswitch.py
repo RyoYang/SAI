@@ -286,12 +286,12 @@ class AvailableNexthopGroupEntryTest(PlatformSaiHelper):
         max_nhg_entry = attr["available_next_hop_group_entry"]
         print("Available nexthop group entries: %d" % max_nhg_entry)
 
-        nhg = []
+        self.nhg = []
         for nhg_number in range(1, max_nhg_entry + 1):
             nexthop_group = sai_thrift_create_next_hop_group(
                 self.client, type=SAI_NEXT_HOP_GROUP_TYPE_ECMP)
             self.assertNotEqual(nexthop_group, SAI_NULL_OBJECT_ID)
-            nhg.append(nexthop_group)
+            self.nhg.append(nexthop_group)
 
             attr = sai_thrift_get_switch_attribute(
                 self.client, available_next_hop_group_entry=True)
@@ -300,9 +300,9 @@ class AvailableNexthopGroupEntryTest(PlatformSaiHelper):
 
 
     def tearDown(self):
-        if nexthop_group != SAI_NULL_OBJECT_ID:
-            sai_thrift_remove_next_hop(self.client, nexthop_group)
-            self.fail("Number of available nexthop groups may be exceeded")
+        # if nexthop_group != SAI_NULL_OBJECT_ID:
+            # sai_thrift_remove_next_hop(self.client, nexthop_group)
+            # self.fail("Number of available nexthop groups may be exceeded")
         for nhg_id in self.nhg:
             sai_thrift_remove_next_hop_group(self.client, nhg_id)
 
