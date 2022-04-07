@@ -100,12 +100,12 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.available_v6_host_routes = None
 
     def runTest(self):
-        # self.availableIPv4RouteEntryTest()
+        self.availableIPv4RouteEntryTest()
         # self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
         # self.availableIPv4NeighborEntryTest()
-        self.availableIPv6NeighborEntryTest()
+        # self.availableIPv6NeighborEntryTest()
         # self.availableNexthopGroupEntryTest()
         # self.availableNexthopGroupMemberEntryTest()
         # self.availableFdbEntryTest()
@@ -113,7 +113,7 @@ class SwitchAttrTest(PlatformSaiHelper):
         # self.readOnlyAttributesTest()
         # if not self.platform == 'brcm': #brcm sdk NOT_IMPLEMENTED_0
         #     self.refreshIntervalTest()
-        self.availableSnatEntryTest()
+        # self.availableSnatEntryTest()
         # self.availableDnatEntryTest()
 
     def availableIPv4RouteEntryTest(self):
