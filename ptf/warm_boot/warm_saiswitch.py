@@ -76,7 +76,7 @@ class WarmAvailableIPv4RouteEntryTest(AvailableIPv4RouteEntryTest):
 
 class WarmAvailableNexthopGroupEntryTest(AvailableNexthopGroupEntryTest):
     """
-    Warm boot Test for available IPv4 Route Entry.
+    Warm boot Test for Available Next hop Group Entry.
     """
     @warm_setup
     def setUp(self):

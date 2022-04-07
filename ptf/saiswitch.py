@@ -300,7 +300,7 @@ class AvailableNexthopGroupEntryTest(PlatformSaiHelper):
 
 
     def tearDown(self):
-        if self.nexthop_group != SAI_NULL_OBJECT_ID:
+        if nexthop_group != SAI_NULL_OBJECT_ID:
             sai_thrift_remove_next_hop(self.client, nexthop_group)
             self.fail("Number of available nexthop groups may be exceeded")
         for nhg_id in self.nhg:
