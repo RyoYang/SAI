@@ -123,3 +123,105 @@ class WarmAvailableNexthopGroupEntryTest(AvailableNexthopGroupEntryTest):
     def tearDown_post_start(self):
         print("tearDown_post_start WarmAvailableNexthopGroupEntryTest")
         print("Skip the teardown after warm boot testing")
+
+
+class WarmAvailableSnatEntryTest(AvailableSnatEntryTest):
+    """
+    Warm boot Test for available snat Entry.
+    """
+    @warm_setup
+    def setUp(self):
+        print("setUp WarmAvailableSnatEntryTest")
+        AvailableSnatEntryTest.setUp(self)
+
+
+    def setUp_starting(self):
+        print("Skip setUp_starting WarmAvailableSnatEntryTest")
+
+
+    def setUp_post_start(self):
+        print("setUp_post_start WarmAvailableSnatEntryTest")
+        SaiHelperBase.setUp(self)
+
+
+    @warm_test
+    def runTest(self):
+        print("Run test WarmAvailableSnatEntryTest")
+        super().runTest()
+
+
+    def test_starting(self):
+        print("Skip test_starting WarmAvailableSnatEntryTest")
+
+
+    def test_post_start(self):
+        print("test_post_start WarmAvailableSnatEntryTest")
+        super().check_amount()
+
+
+    @warm_teardown
+    def tearDown(self):
+        print("tearDown WarmAvailableSnatEntryTest")
+        print("Skip the teardown and make a warm shut down for warm boot testing")
+        self.warm_shutdown()
+
+
+    def tearDown_starting(self):
+        print("tearDown_starting WarmAvailableSnatEntryTest")
+        print("Skip the teardown for warm boot testing")
+
+
+    def tearDown_post_start(self):
+        print("tearDown_post_start WarmAvailableSnatEntryTest")
+        print("Skip the teardown after warm boot testing")
+
+
+class WarmReadOnlyAttributesTest(ReadOnlyAttributesTest):
+    """
+    Warm boot Test read only attributes.
+    """
+    @warm_setup
+    def setUp(self):
+        print("setUp WarmReadOnlyAttributesTest")
+        ReadOnlyAttributesTest.setUp(self)
+
+
+    def setUp_starting(self):
+        print("Skip setUp_starting WarmReadOnlyAttributesTest")
+
+
+    def setUp_post_start(self):
+        print("setUp_post_start WarmReadOnlyAttributesTest")
+        SaiHelperBase.setUp(self)
+
+
+    @warm_test
+    def runTest(self):
+        print("Run test WarmReadOnlyAttributesTest")
+        super().runTest()
+
+
+    def test_starting(self):
+        print("Skip test_starting WarmReadOnlyAttributesTest")
+
+
+    def test_post_start(self):
+        print("test_post_start WarmReadOnlyAttributesTest")
+        super().check_amount()
+
+
+    @warm_teardown
+    def tearDown(self):
+        print("tearDown WarmReadOnlyAttributesTest")
+        print("Skip the teardown and make a warm shut down for warm boot testing")
+        self.warm_shutdown()
+
+
+    def tearDown_starting(self):
+        print("tearDown_starting WarmReadOnlyAttributesTest")
+        print("Skip the teardown for warm boot testing")
+
+
+    def tearDown_post_start(self):
+        print("tearDown_post_start WarmReadOnlyAttributesTest")
+        print("Skip the teardown after warm boot testing")
