@@ -1493,7 +1493,9 @@ class SwitchVxlanTest(PlatformSaiHelper):
         print("\ndefaultPortTest()")
 
         vxlan_port = 4000
-
+        attr = sai_thrift_get_switch_attribute(self.client,
+                                        vxlan_default_port=True)
+        init_vxlan_port = attr['vxlan_default_port']
         try:
             pkt = simple_tcp_packet(eth_dst=ROUTER_MAC,
                                     eth_src='00:22:22:22:22:22',
