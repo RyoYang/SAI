@@ -146,15 +146,15 @@ class SwitchAttrTest(PlatformSaiHelper):
             max_host_route = 0
 
             # For brcm platform: First route in a VRF has to be a default route
-            if self.platform == 'brcm':
-                route_entry = sai_thrift_route_entry_t(
-                    switch_id=self.switch_id,
-                    vr_id = self.default_vrf,
-                    destination=sai_ipprefix('0.0.0.0/0'))
-                status = sai_thrift_create_route_entry(
-                    self.client, route_entry, next_hop_id=nhop)
-                self.assertEqual(status, SAI_STATUS_SUCCESS)
-                route_number += 1
+            # if self.platform == 'brcm':
+            #     route_entry = sai_thrift_route_entry_t(
+            #         switch_id=self.switch_id,
+            #         vr_id = self.default_vrf,
+            #         destination=sai_ipprefix('0.0.0.0/0'))
+            #     status = sai_thrift_create_route_entry(
+            #         self.client, route_entry, next_hop_id=nhop)
+            #     self.assertEqual(status, SAI_STATUS_SUCCESS)
+            #     route_number += 1
 
             while route_number < max_route_entry:
                 ip_p_m = sai_ipprefix(next(ip_add) + mask)
