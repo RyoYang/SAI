@@ -100,8 +100,8 @@ class SwitchAttrTest(PlatformSaiHelper):
         self.available_v6_host_routes = None
 
     def runTest(self):
-        self.availableIPv4RouteEntryTest()
-        # self.availableIPv6RouteEntryTest()
+        # self.availableIPv4RouteEntryTest()
+        self.availableIPv6RouteEntryTest()
         # self.availableIPv4NexthopEntryTest()
         # self.availableIPv6NexthopEntryTest()
         # self.availableIPv4NeighborEntryTest()
@@ -228,14 +228,14 @@ class SwitchAttrTest(PlatformSaiHelper):
 
             route_number = 0
             max_host_route = 0
-            if self.platform == 'brcm':
-                route_entry = sai_thrift_route_entry_t(
-                    switch_id=self.switch_id,
-                    vr_id = self.default_vrf,
-                    destination=sai_ipprefix('::/0'))
-                status = sai_thrift_create_route_entry(
-                    self.client, route_entry, next_hop_id=nhop)
-                self.assertEqual(status, SAI_STATUS_SUCCESS)
+            # if self.platform == 'brcm':
+            #     route_entry = sai_thrift_route_entry_t(
+            #         switch_id=self.switch_id,
+            #         vr_id = self.default_vrf,
+            #         destination=sai_ipprefix('::/0'))
+            #     status = sai_thrift_create_route_entry(
+            #         self.client, route_entry, next_hop_id=nhop)
+            #     self.assertEqual(status, SAI_STATUS_SUCCESS)
             route_number += 1
             route_number += 1
             while route_number < max_route_entry:
