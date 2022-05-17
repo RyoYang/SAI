@@ -262,6 +262,74 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                 print("Cannot create hostif, error : {}".format(e))
 
 
+    def config_vlan(self):
+        """
+        Default configuation, with Vlan.
+        """
+        VLAN_ID = 1000
+        vlan_id = sai_thrfit_create_vlan(self.client, vlan_id=VLAN_ID)
+        for i in range(3, 24):
+            bridge_port_id = sai_thrift_create_bridge_port(self.client,
+                    type=SAI_BRIDGE_PORT_TYPE_PORT,
+                    port_id=self.port_list[i],
+                    admin_state=true,
+                    fdb_learning_mode=SAI_BRIDGE_PORT_FDB_LEARNING_MODE_HW)
+        
+            sai_thrift_set_hostif_attribute(self.client, 
+                    hostif_oid=hostif, 
+                    vlan_tag=SAI_HOSTIF_VLAN_TAG_KEEP)
+
+            self.vlan_member = sai_thrift_create_vlan_number(
+                    self.client,
+                    vlan_id=self.vlan_id,
+                    bridge_port_id=bridge_port_id,
+                    vlan_tagging_mode=SAI_VLAN_TAGGING_MODE_UNTAGGED)
+            sai_thrift_set_port_attribute(self.client, 
+                    port_oid=self.port_list[i], 
+                    vlan_id=vlan_id)
+
+        rif_id = sai_thrift_create_router_interface(self.client, 
+            vr_id=self.default_vrf,
+            src_mac_address=ROUTER_MAC,
+            type=SAI_ROUTER_INTERFACE_TYPE_PORT,
+            mtu=PC_PORT_MTU
+            port_id=self.port1,
+            nat_zone_id=NAT_ZONE_ID)
+            
+        entry = sai_thrift_route_entry_t(
+            vr_id=self.default_vrf,
+            destination=sai_ipprefix('192.168.0.1/32'),
+            switch_id=self.switch_id)
+
+        status = sai_thrift_create_route_entry(
+            self.client,
+            route_entry=entry, 
+            packet_action=SAI_PACKET_ACTION_FORWARD)
+
+        nbr_entry = sai_thrift_neighbor_entry_t(
+            rif=rif_id,
+            ip='192.168.7.255',
+            switch_id=self.switch_id,
+            )
+
+        status = sai_thrift_create_neighbor_entry(
+            self.client,
+            nbr_entry,
+            dst_mac_address='FF:FF:FF:FF:FF:FF'
+            )
+
+        entry = sai_thrift_route_entry_t(
+            vr_id=self.default_vrf,
+            destination=sai_ipprefix('fc02:1000::1/128'),
+            switch_id=self.switch_id)
+
+        status = sai_thrift_create_route_entry(
+            self.client,
+            route_entry=entry, 
+            packet_action=SAI_PACKET_ACTION_FORWARD)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+
     def turn_on_port_admin_state(self):
         """
         Turn on port admin state
