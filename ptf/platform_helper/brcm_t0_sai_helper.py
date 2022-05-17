@@ -29,6 +29,8 @@ DEFAULT_IP_V6_PREFIX = '0000:0000:0000:0000:0000:0000:0000:0000'
 LOCAL_IP_128V6_PREFIX = 'fe80::f68e:38ff:fe16:bc75/128'
 LOCAL_IP_10V6_PREFIX = 'fe80::/10'
 PORT_MTU=9122
+NAT_ZONE_ID = 0
+
 class BrcmT0SaiHelper(CommonSaiHelper):
     """
     This class contains broadcom(brcm) specified functions for the platform setup and test context configuration.
@@ -61,6 +63,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.create_host_intf()
         self.turn_on_port_admin_state()
         #self.set_port_serdes()
+        self.config_vlan()
 
 
     def start_switch(self):
@@ -149,7 +152,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(self.status(), SAI_STATUS_SUCCESS)
 
 
-    def remove_bridge_port():
+    def remove_bridge_port(self):
         """
         Remove bridge ports.
         """
@@ -260,6 +263,77 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                 self.hostifs.append(hostif)
             except BaseException as e:
                 print("Cannot create hostif, error : {}".format(e))
+
+
+    def config_vlan(self):
+        """
+        Default configuation, with Vlan.
+        Craete bridge_port and route interface
+        Steps:
+        """
+        VLAN_ID = 1000
+        PC_PORT_MTU=9100
+        vlan_id = sai_thrift_create_vlan(self.client, vlan_id=VLAN_ID)
+        for i in range(3, 24):
+            bridge_port_id = sai_thrift_create_bridge_port(self.client,
+                    type=SAI_BRIDGE_PORT_TYPE_PORT,
+                    port_id=self.port_list[i],
+                    admin_state=True,
+                    fdb_learning_mode=SAI_BRIDGE_PORT_FDB_LEARNING_MODE_HW)
+        
+            sai_thrift_set_hostif_attribute(self.client, 
+                    hostif_oid=self.hostifs[i], 
+                    vlan_tag=SAI_HOSTIF_VLAN_TAG_KEEP)
+
+            self.vlan_member = sai_thrift_create_vlan_member(
+                    self.client,
+                    vlan_id=vlan_id,
+                    bridge_port_id=bridge_port_id,
+                    vlan_tagging_mode=SAI_VLAN_TAGGING_MODE_UNTAGGED)
+
+            sai_thrift_set_port_attribute(self.client, 
+                    port_oid=self.port_list[i], 
+                    port_vlan_id=VLAN_ID)
+
+        rif_id = sai_thrift_create_router_interface(self.client, 
+            virtual_router_id=self.default_vrf,
+            src_mac_address=ROUTER_MAC,
+            type=SAI_ROUTER_INTERFACE_TYPE_PORT,
+            mtu=PC_PORT_MTU,
+            nat_zone_id=NAT_ZONE_ID)
+            
+        entry = sai_thrift_route_entry_t(
+            vr_id=self.default_vrf,
+            destination=sai_ipprefix('192.168.0.1/32'),
+            switch_id=self.switch_id)
+
+        status = sai_thrift_create_route_entry(
+            self.client,
+            route_entry=entry, 
+            packet_action=SAI_PACKET_ACTION_FORWARD)
+
+        nbr_entry = sai_thrift_neighbor_entry_t(
+            rif_id=rif_id,
+            ip_address=sai_ipaddress('192.168.7.255'),
+            switch_id=self.switch_id
+            )
+
+        # status = sai_thrift_create_neighbor_entry(
+        #     self.client,
+        #     neighbor_entry=nbr_entry,
+        #     dst_mac_address="FF:FF:FF:FF:FF:FF"
+        #     )
+
+        entry = sai_thrift_route_entry_t(
+            vr_id=self.default_vrf,
+            destination=sai_ipprefix('fc02:1000::1/128'),
+            switch_id=self.switch_id)
+
+        status = sai_thrift_create_route_entry(
+            self.client,
+            route_entry=entry, 
+            packet_action=SAI_PACKET_ACTION_FORWARD)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
 
 
     def turn_on_port_admin_state(self):
