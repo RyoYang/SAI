@@ -190,8 +190,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.port4 = self.port_list[hw_port4]
 
         print("Create lag...")
-        vlan_id1 = 1
-        vlan_id2 = 1000
+        self.vlan_id1 = 1
+        self.vlan_id2 = 1000
         self.lag_list = []
 
         self.lag_id1 = sai_thrift_create_lag(self.client)
