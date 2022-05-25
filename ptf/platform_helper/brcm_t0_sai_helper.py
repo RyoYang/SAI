@@ -43,6 +43,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         print("BrcmT0SaiHelper::normal_setup")
         self.start_switch()
         self.config_meta_port()
+        self.config_portchannel()
 
 
     def config_meta_port(self):
@@ -648,6 +649,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             router_interface_id=rif_id3,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
+
 
     def start_switch(self):
         """
