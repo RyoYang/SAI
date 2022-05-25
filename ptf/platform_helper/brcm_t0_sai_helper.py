@@ -489,8 +489,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         )
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id1,
-            ip='10.0.0.57',
+            rif_id=rif_id1,
+            ip_address='10.0.0.57',
             switch_id=self.switch_id,
 
             )
@@ -534,8 +534,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id2,
-            ip='10.0.0.59',
+            rif_id=rif_id2,
+            ip_address='10.0.0.59',
             switch_id=self.switch_id,
             )
 
@@ -554,8 +554,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id3,
-            ip='10.0.0.61',
+            rif_id=rif_id3,
+            ip_address='10.0.0.61',
             switch_id=self.switch_id,
 
             )
@@ -573,8 +573,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id4,
-            ip='10.0.0.63',
+            rif_id=rif_id4,
+            ip_address='10.0.0.63',
             switch_id=self.switch_id,
             )
 
@@ -592,8 +592,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id1,
-            ip='fc00::72',
+            rif_id=rif_id1,
+            ip_address='fc00::72',
             switch_id=self.switch_id,
             )
 
@@ -613,8 +613,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id2,
-            ip='fc00::7a',
+            rif_id=rif_id2,
+            ip_address='fc00::7a',
             switch_id=self.switch_id,
 
             )
@@ -632,8 +632,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id4,
-            ip='fc00::76',
+            rif_id=rif_id4,
+            ip_address='fc00::76',
             switch_id=self.switch_id,
             )
 
@@ -651,8 +651,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
-            rif=rif_id4,
-            ip='fc00::7e',
+            rif_id=rif_id4,
+            ip_address='fc00::7e',
             switch_id=self.switch_id,
             )
 
