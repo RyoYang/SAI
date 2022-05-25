@@ -482,6 +482,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         sai_thrift_set_port_attribute(self.client, port_oid=self.port1, port_vlan_id=self.vlan_id1)
 
         sai_thrift_set_lag_member_attribute(
+            self.client,
             lag_member_oid=self.lag_member1,
             egress_disable=False,
             ingress_disable=False
@@ -509,6 +510,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         sai_thrift_set_port_attribute(self.client, port_oid=self.port4, port_vlan_id=self.vlan_id1)
 
         sai_thrift_set_lag_member_attribute(
+            self.client,
             lag_member_oid=self.lag_member1,
             egress_disable=False,
             ingress_disable=False
