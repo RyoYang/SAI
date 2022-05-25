@@ -527,9 +527,9 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id3, mtu=PC_PORT_MTU)
         sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id4, mtu=PC_PORT_MTU)
 
-        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member2, egress_disable=False, ingress_disable=False)
-        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member3, egress_disable=False, ingress_disable=False)
-        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member4, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=self.lag_member2, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=self.lag_member3, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=self.lag_member4, egress_disable=False, ingress_disable=False)
 
 
         nbr_entry = sai_thrift_neighbor_entry_t(
@@ -592,7 +592,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id1,
-            ip_address='fc00::72',
+            ip_address=sai_ipaddress('fc00::72'),
             switch_id=self.switch_id,
             )
 
@@ -604,7 +604,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='fc00::72',
+            ip=sai_ipaddress('fc00::72'),
             router_interface_id=rif_id1,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
@@ -613,7 +613,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id2,
-            ip_address='fc00::7a',
+            ip_address=sai_ipaddress('fc00::7a'),
             switch_id=self.switch_id,
 
             )
@@ -625,14 +625,14 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='fc00::7a',
+            ip=sai_ipaddress('fc00::7a'),
             router_interface_id=rif_id2,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id4,
-            ip_address='fc00::76',
+            ip_address=sai_ipaddress('fc00::7a'),
             switch_id=self.switch_id,
             )
 
@@ -644,14 +644,14 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='fc00::76',
+            ip=sai_ipaddress('fc00::7a'),
             router_interface_id=rif_id3,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id4,
-            ip_address='fc00::7e',
+            ip_address=sai_ipaddress('fc00::7a'),
             switch_id=self.switch_id,
             )
 
@@ -663,7 +663,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='fc00::7e',
+            ip=sai_ipaddress('fc00::7a'),
             router_interface_id=rif_id3,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
