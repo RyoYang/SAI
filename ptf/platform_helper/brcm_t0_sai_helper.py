@@ -252,7 +252,6 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             self.client, route_entry=entry, packet_action=SAI_PACKET_ACTION_FORWARD)
 
         rif_id1 = sai_thrift_create_router_interface(self.client, 
-            vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
             mtu=PC_PORT_MTU,
@@ -280,7 +279,6 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             packet_action=SAI_PACKET_ACTION_FORWARD)
 
         rif_id2 = sai_thrift_create_router_interface(self.client, 
-            vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
             mtu=PC_PORT_MTU,
@@ -309,7 +307,6 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
 
         rif_id3 = sai_thrift_create_router_interface(self.client, 
-            vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
             mtu=PC_PORT_MTU,
@@ -338,7 +335,6 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
 
         rif_id4 = sai_thrift_create_router_interface(self.client, 
-            vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
             mtu=PC_PORT_MTU,
@@ -502,7 +498,6 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         sai_thrift_set_lag_member(self.client, lag_member=lag_member1, egress_disable=False, ingress_disable=False)
 
         rif_id2 = sai_thrift_create_router_interface(self.client, 
-            vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
             mtu=PC_PORT_MTU,
