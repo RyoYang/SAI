@@ -138,29 +138,29 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             self.client, trap_type=SAI_HOSTIF_TRAP_TYPE_TTL_ERROR, packet_action=SAI_PACKET_ACTION_TRAP,
             trap_group=self.default_trap_group, trap_priority=0)
 
-        self.ports_config = self.parsePortConfig(
-            self.test_params['port_config_ini'])
-        self.port_to_hostif_map = {}
-        self.hostifs = []
-        for i, _ in enumerate(self.port_list):
-            try:
-                setattr(self, 'port%s' % i, self.port_list[i])
-                hostif = sai_thrift_create_hostif(
-                    self.client, 
-                    type=SAI_HOSTIF_TYPE_NETDEV,
-                    obj_id=self.port_list[i],
-                    name=self.ports_config[i]['name'])
-                setattr(self, 'host_if%s' % i, hostif)
-                self.port_to_hostif_map[i]=hostif
-                sai_thrift_set_hostif_attribute(self.client, hostif_oid=hostif, oper_status=False)
-                self.hostifs.append(hostif)
-            except BaseException as e:
-                print("Cannot create hostif, error : {}".format(e))
+        # self.ports_config = self.parsePortConfig(
+        #     self.test_params['port_config_ini'])
+        # self.port_to_hostif_map = {}
+        # self.hostifs = []
+        # for i, _ in enumerate(self.port_list):
+        #     try:
+        #         setattr(self, 'port%s' % i, self.port_list[i])
+        #         hostif = sai_thrift_create_hostif(
+        #             self.client, 
+        #             type=SAI_HOSTIF_TYPE_NETDEV,
+        #             obj_id=self.port_list[i],
+        #             name=self.ports_config[i]['name'])
+        #         setattr(self, 'host_if%s' % i, hostif)
+        #         self.port_to_hostif_map[i]=hostif
+        #         sai_thrift_set_hostif_attribute(self.client, hostif_oid=hostif, oper_status=False)
+        #         self.hostifs.append(hostif)
+        #     except BaseException as e:
+        #         print("Cannot create hostif, error : {}".format(e))
 
-        print("Set port...")
-        for i, port in enumerate(self.port_list):
-            sai_thrift_set_port_attribute(
-                self.client, port_oid=port, mtu=PORT_MTU, admin_state=True)
+        # print("Set port...")
+        # for i, port in enumerate(self.port_list):
+        #     sai_thrift_set_port_attribute(
+        #         self.client, port_oid=port, mtu=PORT_MTU, admin_state=True)
         
         print("Recreate Port serdes...")
         #for i, port in enumerate(self.port_list):
