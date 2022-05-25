@@ -174,6 +174,11 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         Default configration for Port Channel 
         """
         print("Get Port List...")
+        hw_port1 = 0
+        hw_port2 = 1
+        hw_port3 = 2
+        hw_port4 = 3
+
         port_list = sai_thrift_object_list_t(count=100)
         p_list = sai_thrift_get_switch_attribute(
             self.client, port_list=port_list)
