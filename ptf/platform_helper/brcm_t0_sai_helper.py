@@ -198,7 +198,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.lag_member1 = sai_thrift_create_lag_member(
             self.client, 
             lag_id=self.lag_id1, 
-            port_id=self.port1
+            port_id=self.port1,
             egress_disable=True,
             ingress_disable=True)
 
@@ -238,7 +238,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         PC_PORT_MTU = 9100
         NAT_ZONE_ID = 0
 
-       print("Create route...")
+        print("Create route...")
         entry = sai_thrift_route_entry_t(
             vr_id=self.default_vrf,
             destination=sai_ipprefix(LOCAL_IP_10V6_PREFIX),
