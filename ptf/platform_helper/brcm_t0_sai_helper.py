@@ -206,7 +206,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.lag_member2 = sai_thrift_create_lag_member(
             self.client, 
             lag_id=self.lag_id2, 
-            port_id=self.port2
+            port_id=self.port2,
             egress_disable=True,
             ingress_disable=True)
 
@@ -214,7 +214,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.lag_member3 = sai_thrift_create_lag_member(
             self.client, 
             lag_id=self.lag_id3, 
-            port_id=self.port3
+            port_id=self.port3,
             egress_disable=True,
             ingress_disable=True)
 
@@ -222,7 +222,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.lag_member4 = sai_thrift_create_lag_member(
             self.client, 
             lag_id=self.lag_id4, 
-            port_id=self.port4
+            port_id=self.port4,
             egress_disable=True,
             ingress_disable=True)
 
@@ -250,7 +250,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
-            mtu=PC_PORT_MTU
+            mtu=PC_PORT_MTU,
             port_id=self.port1,
             nat_zone_id=NAT_ZONE_ID)
         self.assertEqual(self.status(), SAI_STATUS_SUCCESS)
@@ -278,7 +278,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
-            mtu=PC_PORT_MTU
+            mtu=PC_PORT_MTU,
             port_id=self.port2,
             nat_zone_id=NAT_ZONE_ID)
         self.assertEqual(self.status(), SAI_STATUS_SUCCESS)
@@ -307,7 +307,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
-            mtu=PC_PORT_MTU
+            mtu=PC_PORT_MTU,
             port_id=self.port3,
             nat_zone_id=NAT_ZONE_ID)
         self.assertEqual(self.status(), SAI_STATUS_SUCCESS)
@@ -336,7 +336,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
-            mtu=PC_PORT_MTU
+            mtu=PC_PORT_MTU,
             port_id=self.port4,
             nat_zone_id=NAT_ZONE_ID)
         self.assertEqual(self.status(), SAI_STATUS_SUCCESS)
@@ -500,7 +500,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             vr_id=self.default_vrf,
             src_mac_address=ROUTER_MAC,
             type=SAI_ROUTER_INTERFACE_TYPE_PORT,
-            mtu=PC_PORT_MTU
+            mtu=PC_PORT_MTU,
             port_id=self.port2,
             nat_zone_id=NAT_ZONE_ID)
             
