@@ -398,7 +398,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         sai_thrift_create_hostif_trap(client=self.client,
             trap_type=SAI_HOSTIF_TRAP_TYPE_IP2ME,
-            trap_group_id=trap_group_id1,
+            trap_group=trap_group_id1,
             packet_action=SAI_PACKET_ACTION_TRAP,
             trap_priority=1)
 
@@ -406,7 +406,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         sai_thrift_create_hostif_trap(client=self.client,
             trap_type=SAI_HOSTIF_TRAP_TYPE_BGP,
-            trap_group_id=trap_group_id2,
+            trap_group=trap_group_id2,
             packet_action=SAI_PACKET_ACTION_TRAP,
             trap_priority=4)
 
@@ -435,7 +435,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         sai_thrift_create_hostif_trap(client=self.client,
             trap_type=SAI_HOSTIF_TRAP_TYPE_ARP_REQUEST,
-            trap_group_id=trap_group_id3,
+            trap_group=trap_group_id3,
             packet_action=SAI_PACKET_ACTION_TRAP,
             trap_priority=4)
 
@@ -455,7 +455,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         sai_thrift_create_hostif_trap(client=self.client,
             trap_type=SAI_HOSTIF_TRAP_TYPE_DHCP,
-            trap_group_id=trap_group_id4,
+            trap_group=trap_group_id4,
             packet_action=SAI_PACKET_ACTION_TRAP,
             trap_priority=4)
 
