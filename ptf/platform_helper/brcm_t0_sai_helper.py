@@ -490,9 +490,8 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id1,
-            ip_address='10.0.0.57',
+            ip_address=sai_ipaddress('10.0.0.57'),
             switch_id=self.switch_id,
-
             )
         status = sai_thrift_create_neighbor_entry(
             self.client,
@@ -502,7 +501,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='10.0.0.57',
+            ip=sai_ipaddress('10.0.0.57'),
             router_interface_id=rif_id1,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
@@ -535,7 +534,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id2,
-            ip_address='10.0.0.59',
+            ip_address=sai_ipaddress('10.0.0.59'),
             switch_id=self.switch_id,
             )
 
@@ -547,7 +546,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='10.0.0.59',
+            ip=sai_ipaddress('10.0.0.59'),
             router_interface_id=rif_id2,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
@@ -555,7 +554,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id3,
-            ip_address='10.0.0.61',
+            ip_address=sai_ipaddress('10.0.0.61'),
             switch_id=self.switch_id,
 
             )
@@ -567,14 +566,14 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='10.0.0.61',
+            ip=sai_ipaddress('10.0.0.61'),
             router_interface_id=rif_id4,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif_id=rif_id4,
-            ip_address='10.0.0.63',
+            ip_address=sai_ipaddress('10.0.0.63'),
             switch_id=self.switch_id,
             )
 
@@ -586,7 +585,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         nexthop = sai_thrift_create_next_hop(
             self.client,
-            ip='10.0.0.63',
+            ip=sai_ipaddress('10.0.0.63'),
             router_interface_id=rif_id3,
             type=SAI_NEXT_HOP_TYPE_IP)
         self.assertEqual(status, SAI_STATUS_SUCCESS)
