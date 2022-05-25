@@ -383,7 +383,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cir=POLICER_CIR1,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
 
-        sai_thrift_set_hostif_attribute(self.client, hostif_oid=self.default_trap_group, queue=0, policer=sai_policer_id1)
+        sai_thrift_set_hostif_trap_group_attribute(self.client, hostif_trap_group_oid=self.default_trap_group, queue=0, policer=sai_policer_id1)
 
         trap_group_id1 = sai_thrift_create_hostif_trap_group(self.client, queue=0)
 
@@ -394,7 +394,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cir=POLICER_CIR2,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
 
-        sai_thrift_set_hostif_attribute(self.client, hostif_oid=trap_group_id1, policer=sai_policer_id2)
+        sai_thrift_set_hostif_trap_group_attribute(self.client, hostif_trap_group_oid=trap_group_id1, policer=sai_policer_id2)
 
         sai_thrift_create_hostif_trap(client=self.client,
             type=SAI_HOSTIF_TRAP_TYPE_IP2ME,
@@ -431,7 +431,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cir=POLICER_CIR1,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
 
-        sai_thrift_set_hostif_attribute(self.client, hostif_oid=trap_group_id3, policer=sai_policer_id3)
+        sai_thrift_set_hostif_trap_group_attribute(self.client, hostif_trap_group_oid=trap_group_id3, policer=sai_policer_id3)
 
         sai_thrift_create_hostif_trap(client=self.client,
             type=SAI_HOSTIF_TRAP_TYPE_ARP_REQUEST,
