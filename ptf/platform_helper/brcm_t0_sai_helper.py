@@ -382,7 +382,10 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cbs=POLICER_CBS1,
                             cir=POLICER_CIR1,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
-        sai_thrift_set_hostif_trap_group(self.client, queue=0, policer=self.sai_policer_id1)
+
+        sai_thrift_set_hostif_attribute(self.client, hostif_oid=self.default_trap_group, queue=0, policer=sai_policer_id1)
+
+        trap_group_id1 = sai_thrift_create_hostif_trap_group(self.client, queue=0)
 
         sai_policer_id2 = sai_thrift_create_policer(self.client,
                             meter_type=SAI_METER_TYPE_PACKETS,
@@ -391,8 +394,16 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cir=POLICER_CIR2,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
 
+        sai_thrift_set_hostif_attribute(self.client, hostif_oid=trap_group_id1, policer=sai_policer_id2)
+
+        sai_thrift_create_hostif_trap(client=self.client,
+            type=SAI_HOSTIF_TRAP_TYPE_IP2ME,
+            trap_group_id=trap_group_id1,
+            packet_action=SAI_PACKET_ACTION_TRAP,
+            trap_priority=1)
+
         trap_group_id2 = sai_thrift_create_hostif_trap_group(self.client, queue=4)
-        sai_thrift_set_hostif_trap_group(self.client, policer=sai_policer_id2)
+
         sai_thrift_create_hostif_trap(client=self.client,
             type=SAI_HOSTIF_TRAP_TYPE_BGP,
             trap_group_id=trap_group_id2,
@@ -420,8 +431,7 @@ class BrcmT0SaiHelper(CommonSaiHelper):
                             cir=POLICER_CIR1,
                             red_packet_action=SAI_PACKET_ACTION_DROP)
 
-        
-        sai_thrift_set_hostif_trap_group(self.client, policer=sai_policer_id3)
+        sai_thrift_set_hostif_attribute(self.client, hostif_oid=trap_group_id3, policer=sai_policer_id3)
 
         sai_thrift_create_hostif_trap(client=self.client,
             type=SAI_HOSTIF_TRAP_TYPE_ARP_REQUEST,
@@ -470,10 +480,12 @@ class BrcmT0SaiHelper(CommonSaiHelper):
 
         print("Disable Lag configration...")
         sai_thrift_set_port_attribute(self.client, port_oid=self.port1, port_vlan_id=self.vlan_id1)
-        sai_thrift_set_lag_member(self.client, 
-            lag_member=self.lag1_member, 
+
+        sai_thrift_set_lag_member_attribute(
+            lag_member_oid=self.lag1_member,
             egress_disable=False,
-            ingress_disable=False)
+            ingress_disable=False
+        )
 
         nbr_entry = sai_thrift_neighbor_entry_t(
             rif=rif_id1,
@@ -495,7 +507,12 @@ class BrcmT0SaiHelper(CommonSaiHelper):
         self.assertEqual(status, SAI_STATUS_SUCCESS)
 
         sai_thrift_set_port_attribute(self.client, port_oid=self.port4, port_vlan_id=self.vlan_id1)
-        sai_thrift_set_lag_member(self.client, lag_member=lag_member1, egress_disable=False, ingress_disable=False)
+
+        sai_thrift_set_lag_member_attribute(
+            lag_member_oid=self.lag1_member,
+            egress_disable=False,
+            ingress_disable=False
+        )
 
         rif_id2 = sai_thrift_create_router_interface(self.client, 
             src_mac_address=ROUTER_MAC,
@@ -504,14 +521,14 @@ class BrcmT0SaiHelper(CommonSaiHelper):
             port_id=self.port2,
             nat_zone_id=NAT_ZONE_ID)
             
-        sai_thrift_set_router_interface(self.client, rif=rif_id1, mtu=PC_PORT_MTU)
-        sai_thrift_set_router_interface(self.client, rif=rif_id2, mtu=PC_PORT_MTU)
-        sai_thrift_set_router_interface(self.client, rif=rif_id3, mtu=PC_PORT_MTU)
-        sai_thrift_set_router_interface(self.client, rif=rif_id4, mtu=PC_PORT_MTU)
+        sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id1, mtu=PC_PORT_MTU)
+        sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id2, mtu=PC_PORT_MTU)
+        sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id3, mtu=PC_PORT_MTU)
+        sai_thrift_set_router_interface_attribute(self.client, router_interface_oid=rif_id4, mtu=PC_PORT_MTU)
 
-        sai_thrift_set_lag_member(self.client, lag_member=lag_member2, egress_disable=False, ingress_disable=False)
-        sai_thrift_set_lag_member(self.client, lag_member=lag_member3, egress_disable=False, ingress_disable=False)
-        sai_thrift_set_lag_member(self.client, lag_member=lag_member4, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member2, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member3, egress_disable=False, ingress_disable=False)
+        sai_thrift_set_lag_member_attribute(self.client, lag_member_oid=lag_member4, egress_disable=False, ingress_disable=False)
 
 
         nbr_entry = sai_thrift_neighbor_entry_t(
