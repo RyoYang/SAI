@@ -26,9 +26,11 @@ class L2FdbForwardingTest(SaiT0HelperBase):
         SaiT0HelperBase.setUp(self)
         print("Sending L2 packet port 1 -> port 2")
 
-        self.pkt = simple_udp_packet(eth_dst=self.vlan10_mac_list[1],
-                   eth_src=self.vlan10_mac_list[0])
-
+        self.pkt = simple_tcp_packet(eth_dst=self.vlan10_mac_list[1],
+                            eth_src=self.vlan10_mac_list[0],
+                            ip_dst='172.16.0.1',
+                            ip_id=101,
+                            ip_ttl=64)
     def runTest(self):
         """
         Test the basic runTest proecss
@@ -37,7 +39,6 @@ class L2FdbForwardingTest(SaiT0HelperBase):
                 (self.port_list[1], self.vlan10_mac_list[0], self.vlan10_mac_list[1]))
         try:
             send_packet(self, 1, self.pkt)
-            time.sleep(5)
             verify_packet(self, self.pkt, 2)
 
             print("Verification complete!")
