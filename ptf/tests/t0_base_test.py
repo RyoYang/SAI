@@ -68,7 +68,7 @@ class SaiT0HelperBase(ThriftInterfaceDataPlane):
         self.basic_configer.start_switch(self)
         self.basic_configer.config_meta_port(self)
         self.route_configer.create_default_route(self)
-        self.fdb_configer.create_fdb_entries(self)
+        self.fdb_configer.config_fdb(self)
     
     def getSwitchPorts(self):
         """
