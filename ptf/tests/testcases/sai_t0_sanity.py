@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from t0_base_test import SaiT0HelperBase
 from sai_thrift.sai_headers import *
 from ptf import config
@@ -11,7 +13,6 @@ class L2FdbForwardingTest(SaiT0HelperBase):
     """
     Verify L2 fdb functionilty
     """
-    #Todo remove this class when T0 data is ready, this class should not be checked into repo
     def setUp(self):
         """
         Test the basic setup proecss

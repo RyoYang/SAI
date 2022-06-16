@@ -19,6 +19,7 @@ import sai_thrift.sai_adapter as adapter
 from sai_thrift.sai_adapter import *
 from config.basic_config import BasicT0Config
 from config.route_config import RouteT0Config
+from config.fdb_config import FdbT0Config
 from sai_base_utils import *
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -46,6 +47,7 @@ class SaiT0HelperBase(ThriftInterfaceDataPlane):
         super(SaiT0HelperBase, self).setUp()
         self.basic_configer = BasicT0Config()
         self.route_configer = RouteT0Config()
+        self.fdb_configer = FdbT0Config()
         self.getSwitchPorts()
         self.normal_setup()
 
@@ -66,6 +68,7 @@ class SaiT0HelperBase(ThriftInterfaceDataPlane):
         self.basic_configer.start_switch(self)
         self.basic_configer.config_meta_port(self)
         self.route_configer.create_default_route(self)
+        self.fdb_configer.create_fdb_entries(self)
     
     def getSwitchPorts(self):
         """

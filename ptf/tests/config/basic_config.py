@@ -16,11 +16,14 @@ class BasicT0Config(object):
         """
         Default configuation, with metadata and ports configurations.
         """
+        self.get_port_list(test)     
+        self.turn_up_and_check_ports(test)  
         self.get_port_list(test)        
         self.get_default_1q_bridge(test)
         self.get_default_vlan(test)
         self.remove_vlan_member(test)
         self.remove_bridge_port(test)
+        self.create_bridge_port(test)
         self.create_host_intf(test)
         self.turn_on_port_admin_state(test)
         #test.set_port_serdes()
@@ -134,7 +137,7 @@ class BasicT0Config(object):
         test.ports_config = test.parsePortConfig(
             test.test_params['port_config_ini'])
         test.port_to_hostif_map = {}
-        test.hostifs = []
+        test.hostif_list = []
         for i, _ in enumerate(test.port_list):
             try:
                 setattr(self, 'port%s' % i, test.port_list[i])
@@ -146,9 +149,24 @@ class BasicT0Config(object):
                 setattr(self, 'host_if%s' % i, hostif)
                 test.port_to_hostif_map[i]=hostif
                 sai_thrift_set_hostif_attribute(test.client, hostif_oid=hostif, oper_status=False)
-                test.hostifs.append(hostif)
+                test.hostif_list.append(hostif)
             except BaseException as e:
                 print("Cannot create hostif, error : {}".format(e))
+
+
+    def create_bridge_port(self, test):
+        """
+        Create bridge ports base on port_list.
+        """
+        test.bridge_port_list = []
+        for i, _ in enumerate(test.port_list):
+            port_bp = sai_thrift_create_bridge_port(
+                test.client,
+                bridge_id=test.default_1q_bridge_id,
+                port_id=test.port_list[i],
+                type=SAI_BRIDGE_PORT_TYPE_PORT,
+                admin_state=True)
+            test.bridge_port_list.append(port_bp)
 
 
     def turn_on_port_admin_state(self, test):
@@ -170,3 +188,35 @@ class BasicT0Config(object):
             sai_thrift_set_port_attribute(
                 test.client, port_oid=port, mtu=PORT_MTU, admin_state=True)
 
+
+    def turn_up_and_check_ports(self, test):
+        '''
+        Method to turn up the ports.
+        In case some device not init the port after start the switch.
+        Needs the following class attributes:
+            self.port_list - list of all active port objects
+        '''
+
+        #For brcm devices, need to init and setup the ports at once after start the switch.
+        retries = 10
+        for port_id in test.port_list:
+            try:
+                sai_thrift_set_port_attribute(
+                    test.client, port_oid=port_id, admin_state=True)
+            except BaseException as e:
+                print("Cannot setup port admin state, error {}".format(e))
+
+        for num_of_tries in range(retries):
+            all_ports_are_up = True
+            time.sleep(2)
+            for port_id in test.port_list:
+                port_attr = sai_thrift_get_port_attribute(
+                    test.client, port_id, oper_status=True)
+                if port_attr['oper_status'] != SAI_PORT_OPER_STATUS_UP:
+                    all_ports_are_up = False
+                    time.sleep(1)
+                    print("port is down: {}".format(port_attr['oper_status']))
+            if all_ports_are_up:
+                break
+        if not all_ports_are_up:
+            print("Not all the ports are up after {} rounds of retries.".format(retries))
