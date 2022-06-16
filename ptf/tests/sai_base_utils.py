@@ -84,3 +84,17 @@ def num_to_dotted_quad(address, ipv4=True):
             result = result + sign
         i += 1
     return result[:-1]
+
+
+def generate_mac_address_list(prefix, role, extra, index_start, index_end):
+    """
+    Helper function to generate mac address list according to pre-defined pattern
+
+    Returns:
+        list: formatted MAC Address
+    """
+    mac_list = []
+    for index in range(index_start, index_end + 1):  
+        mac = prefix + ':' + '{:02d}'.format(role) +':'+'{:02d}'.format(extra) +':'+ '{:02d}'.format(index)
+        mac_list.append(mac)
+    return mac_list
