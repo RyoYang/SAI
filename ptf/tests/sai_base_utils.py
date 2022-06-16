@@ -89,7 +89,6 @@ def num_to_dotted_quad(address, ipv4=True):
 def generate_mac_address_list(prefix, role, extra, index_start, index_end):
     """
     Helper function to generate mac address list according to pre-defined pattern
-
     Returns:
         list: formatted MAC Address
     """
@@ -98,3 +97,17 @@ def generate_mac_address_list(prefix, role, extra, index_start, index_end):
         mac = prefix + ':' + '{:02d}'.format(role) +':'+'{:02d}'.format(extra) +':'+ '{:02d}'.format(index)
         mac_list.append(mac)
     return mac_list
+
+    
+def generate_ip_address_list(prefix, extra, index_start, index_end):
+    """
+    Helper function to generate ip address list according to pre-defined pattern
+
+    Returns:
+        list: formatted IP Address
+    """
+    ip_list = []
+    for index in range(index_start, index_end + 1):  
+        ip = prefix + '.'+ str(extra) +'.'+ str(index)
+        ip_list.append(ip)
+    return ip_list
