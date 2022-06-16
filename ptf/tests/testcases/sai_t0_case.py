@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from t0_base_test import SaiT0HelperBase
 
 class InitBasicData(SaiT0HelperBase):
