@@ -43,3 +43,4 @@ class FdbT0Config(object):
                 type=type,
                 bridge_port_id=test.bridge_port_list[port_index],
                 packet_action=SAI_PACKET_ACTION_FORWARD)
+            print("mac: %s, index: %s".format(mac, port_index))
