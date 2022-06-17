@@ -17,14 +17,14 @@ class FdbT0Config(object):
          Config fdb according to config_t0.md in sai-ptf test plan
         """
         print("Create fdb config...")
-        test.port0_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 0, 0, 0, test.default_vlan_id)
-        self.create_fdb_entries(test, test.port0_mac_list, 0, SAI_FDB_ENTRY_TYPE_STATIC)
+        test.port0_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 0, 0, 0)
+        self.create_fdb_entries(test, test.port0_mac_list, 0, SAI_FDB_ENTRY_TYPE_STATIC, test.default_vlan_id)
 
-        test.vlan10_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 1, 1, 8, test.default_vlan_id)
-        self.create_fdb_entries(test, test.vlan10_mac_list, 1, SAI_FDB_ENTRY_TYPE_STATIC)
+        test.vlan10_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 1, 1, 8)
+        self.create_fdb_entries(test, test.vlan10_mac_list, 1, SAI_FDB_ENTRY_TYPE_STATIC, test.default_vlan_id)
 
-        test.vlan20_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 2, 9, 16, test.default_vlan_id)
-        self.create_fdb_entries(test, test.vlan20_mac_list, 9, SAI_FDB_ENTRY_TYPE_STATIC)
+        test.vlan20_mac_list = generate_mac_address_list(FDB_MAC_PREFIX, 99, 2, 9, 16)
+        self.create_fdb_entries(test, test.vlan20_mac_list, 9, SAI_FDB_ENTRY_TYPE_STATIC, test.default_vlan_id)
 
 
     def create_fdb_entries(self, test, mac_list, port_start_index, type, vlan_oid):
