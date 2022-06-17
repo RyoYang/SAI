@@ -39,7 +39,7 @@ class L2FdbForwardingTest(SaiT0HelperBase):
                 (self.port_list[1], self.vlan10_mac_list[0], self.vlan10_mac_list[1]))
         try:
             send_packet(self, 1, self.pkt)
-            verify_packet(self, self.pkt, 1)
+            verify_packet(self, self.pkt, 2)
 
             print("Verification complete!")
         finally:
