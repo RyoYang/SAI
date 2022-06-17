@@ -18,13 +18,12 @@ class BasicT0Config(object):
         """
         self.get_port_list(test)     
         self.turn_up_and_check_ports(test)  
-        self.get_port_list(test)        
         self.get_default_1q_bridge(test)
         self.get_default_vlan(test)
         self.remove_vlan_member(test)
         self.remove_bridge_port(test)
-        self.create_bridge_port(test)
         self.create_host_intf(test)
+        self.create_bridge_port(test)
         self.turn_on_port_admin_state(test)
         #test.set_port_serdes()
 
