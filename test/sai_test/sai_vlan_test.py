@@ -259,11 +259,13 @@ class ArpRequestLearningTest(T0TestBase):
                 arp_op=2,
                 ip_tgt=ip2,
                 ip_snd=ip1,
-                hw_snd=self.local_server_mac_list[1],
-                hw_tgt=self.local_server_mac_list[2])
+                hw_snd=self.local_server_mac_list[2],
+                hw_tgt=self.local_server_mac_list[1])
 
     def runTest(self):
         send_packet(self, 2, self.arp_response)
+        import pdb
+        pdb.set_trace()
         verify_packet(self, self.arp_response, self.dev_port_list[1])
         verify_no_other_packets(self)
 
