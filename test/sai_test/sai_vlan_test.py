@@ -308,7 +308,7 @@ class TaggedVlanStatusTest(T0TestBase):
         out_packets = stats["SAI_VLAN_STAT_OUT_PACKETS"]
         out_ucast_packets = stats["SAI_VLAN_STAT_OUT_UCAST_PKTS"]
         """
-        Brcm may not this API, Skip all verification in this testcase
+        Brcm may don't support this API, Skip all verification in this testcase
         """
         # self.assertEqual((in_packets, in_packets_pre + 1),
         #                 'vlan IN packets counter {} != {}'.format(
@@ -389,7 +389,7 @@ class UntaggedVlanStatusTest(T0TestBase):
         out_packets = stats["SAI_VLAN_STAT_OUT_PACKETS"]
         out_ucast_packets = stats["SAI_VLAN_STAT_OUT_UCAST_PKTS"]
         """
-        Brcm may not this API, Skip all verification in this testcase
+        Brcm may don't support this API, Skip all verification in this testcase
         """
         # self.assertEqual((in_packets, in_packets_pre + 1),
         #                 'vlan IN packets counter {} != {}'.format(
