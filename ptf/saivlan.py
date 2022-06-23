@@ -1706,7 +1706,6 @@ class L2VlanTest(SaiHelper):
                                 ip_dst='172.16.0.1',
                                 ip_id=101,
                                 ip_ttl=64)
-                                
         stats = sai_thrift_get_vlan_stats(self.client, self.vlan10)
         in_bytes_pre = stats["SAI_VLAN_STAT_IN_OCTETS"]
         out_bytes_pre = stats["SAI_VLAN_STAT_OUT_OCTETS"]
