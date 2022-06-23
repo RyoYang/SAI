@@ -211,7 +211,7 @@ class DisableMacLearningUntaggedTest(T0TestBase):
                                 eth_src=self.local_server_mac_list[1],
                                 ip_id=101,
                                 ip_ttl=64)
-        send_packet(self, 1, pkt)
+        send_packet(self, self.dev_port_list[1], pkt)
         verify_each_packet_on_multiple_port_lists(
             self, [pkt], [self.dev_port_list[2:9]])
 
@@ -236,7 +236,7 @@ class ArpRequestFloodingTest(T0TestBase):
                 hw_tgt=self.local_server_mac_list[2])
 
     def runTest(self):
-        send_packet(self, 1, self.arp_request)
+        send_packet(self, self.dev_port_list[1], self.arp_request)
         verify_each_packet_on_multiple_port_lists(
             self, [self.arp_request], [self.dev_port_list[2:9]])
 
@@ -263,7 +263,7 @@ class ArpRequestLearningTest(T0TestBase):
                 hw_tgt=self.local_server_mac_list[1])
 
     def runTest(self):
-        send_packet(self, 2, self.arp_response)
+        send_packet(self, self.dev_port_list[2], self.arp_response)
         import pdb
         pdb.set_trace()
         verify_packet(self, self.arp_response, self.dev_port_list[1])
