@@ -254,8 +254,8 @@ class ArpRequestLearningTest(T0TestBase):
         ip1 = "192.168.0.1"
         ip2 = "192.168.0.2" 
         self.arp_response = simple_arp_packet(
-                eth_dst=self.local_server_mac_list[2],
-                eth_src=self.local_server_mac_list[1],
+                eth_dst=self.local_server_mac_list[1],
+                eth_src=self.local_server_mac_list[2],
                 arp_op=2,
                 ip_tgt=ip2,
                 ip_snd=ip1,
