@@ -65,3 +65,53 @@ class L2_Port_Forwarding_Test(T0TestBase):
         """
         sai_thrift_flush_fdb_entries(
             self.client, entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
+
+
+class FdbPortAgeTest(T0TestBase):
+    """
+    Verify the basic fdb forwarding.
+    Segment should be forwarding to the correlated port bases on the FDB table.
+    """
+
+    def setUp(self):
+        """
+        Test the basic setup process
+        """
+        T0TestBase.setUp(self, is_reset_default_vlan=False)
+
+    def runTest(self):
+        """
+        Test fdb Aging on Port
+        """
+        fdb_age_time = 10
+        try:
+            status = sai_thrift_set_switch_attribute(self.client,
+                        fdb_aging_time=self.age_time)
+            self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+
+            print("FdbPortAgeTest.")
+            
+
+
+            for index in range(2, 9):
+                print("L2 Forwarding from {} to port: {}".format(
+                    self.dev_port_list[1],
+                    self.dev_port_list[index]))
+                pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[index],
+                                        eth_src=self.local_server_mac_list[1],
+                                        vlan_vid=10,
+                                        ip_id=101,
+                                        ip_ttl=64)
+
+                send_packet(self, self.dev_port_list[1], pkt)
+                verify_packet(self, pkt, self.dev_port_list[index])
+        finally:
+            pass
+
+    def tearDown(self):
+        """
+        Test the basic tearDown process
+        """
+        sai_thrift_flush_fdb_entries(
+            self.client, entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
