@@ -221,3 +221,15 @@ class T0TestBase(ThriftInterfaceDataPlane):
             int: sai call result
         """
         return adapter.status
+
+    @staticmethod
+    def saiWaitFdbAge(timeout):
+        """
+        Wait for fdb entry to ageout
+
+        Args:
+            timeout (int): Timeout value in seconds
+        """
+        print("Waiting for fdb entry to age")
+        aging_interval_buffer = 10
+        time.sleep(timeout + aging_interval_buffer)
