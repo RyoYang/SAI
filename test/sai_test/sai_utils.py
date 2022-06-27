@@ -99,15 +99,3 @@ def num_to_dotted_quad(address, ipv4=True):
             result = result + sign
         i += 1
     return result[:-1]
-
-
-def saiWaitFdbAge(timeout):
-    """
-    Wait for fdb entry to ageout
-
-    Args:
-        timeout (int): Timeout value in seconds
-    """
-    print("Waiting for fdb entry to age")
-    aging_interval_buffer = 10
-    time.sleep(timeout + aging_interval_buffer)

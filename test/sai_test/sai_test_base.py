@@ -33,6 +33,7 @@ from sai_thrift import sai_rpc
 import sai_thrift.sai_adapter as adapter
 from sai_thrift.sai_adapter import *
 from sai_utils import *
+import time
 
 THRIFT_PORT = 9092
 is_configured = False
