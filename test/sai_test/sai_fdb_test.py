@@ -18,7 +18,6 @@
 #
 #
 
-from click import pass_obj
 from sai_test_base import T0TestBase
 from sai_thrift.sai_headers import *
 from ptf import config
