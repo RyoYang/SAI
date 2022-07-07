@@ -85,12 +85,10 @@ class VlanPortLearnDisableTest(T0TestBase):
         self.chck_pkt = simple_udp_packet(eth_dst=unknown_mac1,
                                     eth_src=unknown_mac2,
                                     pktlen=100)
-        status = sai_thrift_flush_fdb_entries(
+        sai_thrift_flush_fdb_entries(
             self.client, entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
-        self.assertEqual(status, SAI_STATUS_SUCCESS)
-        status = sai_thrift_set_vlan_attribute(
+        sai_thrift_set_vlan_attribute(
             self.client, self.vlans[10].vlan_oid, learn_disable=True)
-        self.assertEqual(status, SAI_STATUS_SUCCESS)
 
     def runTest(self):
         print("VlanPortLearnDisableTest")
