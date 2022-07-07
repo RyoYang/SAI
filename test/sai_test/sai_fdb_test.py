@@ -115,7 +115,7 @@ class VlanPortLearnDisableTest(T0TestBase):
 
         # restore initial VLAN Learning state
         sai_thrift_set_vlan_attribute(
-            self.client, self.vlan10, learn_disable=False)
+            self.client, self.vlans[10].vlan_oid, learn_disable=False)
 
 
 class BPPortLearnDisableTest(T0TestBase):
