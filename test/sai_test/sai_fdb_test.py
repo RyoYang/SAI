@@ -89,6 +89,7 @@ class VlanPortLearnDisableTest(T0TestBase):
             self.client, entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
         sai_thrift_set_vlan_attribute(
             self.client, self.vlans[10].vlan_oid, learn_disable=True)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
 
     def runTest(self):
         print("VlanPortLearnDisableTest")
@@ -158,8 +159,9 @@ class BPPortLearnDisableTest(T0TestBase):
             self, [self.pkt], [self.dev_port_list[2:9]])
 
         send_packet(self, 2, self.chck_pkt)
+        verify_packet(self, self.chck_pkt, self.dev_port_list[1])
         verify_each_packet_on_multiple_port_lists(
-            self, [self.chck_pkt, self.chck_pkt], [[self.dev_port_list[1]], [self.dev_port_list[3:9]]])
+            self, [self.chck_pkt], [self.dev_port_list[3:9]])
 
         self.assertEqual(attr["available_fdb_entry"] - current_fdb_entry, 0)
         print("Verification complete")
