@@ -104,6 +104,8 @@ class VlanPortLearnDisableTest(T0TestBase):
         send_packet(self, 2, self.chck_pkt)
         verify_each_packet_on_multiple_port_lists(
             self, [self.chck_pkt], [self.dev_port_list[1], self.dev_port_list[3:9]])
+        verify_each_packet_on_multiple_port_lists(
+            self, [self.chck_pkt], [self.dev_port_list[3:9]])
 
         self.assertEqual(attr["available_fdb_entry"] - current_fdb_entry, 0)
         print("Verification complete")
