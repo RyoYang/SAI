@@ -102,8 +102,7 @@ class VlanPortLearnDisableTest(T0TestBase):
             self, [self.pkt], [self.dev_port_list[2:9]])
 
         send_packet(self, 2, self.chck_pkt)
-        verify_each_packet_on_multiple_port_lists(
-            self, [self.chck_pkt], [self.dev_port_list[1]])
+        verify_packet(self, self.chck_pkt, self.dev_port_list[1])
         verify_each_packet_on_multiple_port_lists(
             self, [self.chck_pkt], [self.dev_port_list[3:9]])
 
