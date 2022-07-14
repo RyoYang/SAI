@@ -866,28 +866,138 @@ class FdbDisableMacMoveDropTest(T0TestBase):
         Test the basic setup process
         """
         T0TestBase.setUp(self, is_reset_default_vlan=False)
-        sai_thrift_flush_fdb_entries(
-            self.client,
-            entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_DYNAMIC)
+        fdb_entry = sai_thrift_fdb_entry_t(switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[1],
+            bv_id=self.vlan10)
+        status = sai_thrift_create_fdb_entry(self.client,
+            fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_DYNAMIC,
+            bridge_port_id=self.bridge_port_list[1],
+            allow_mac_move=False)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+        self.pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[2],
+            eth_src=self.local_server_mac_list[1],
+            pktlen=100)
 
 
     def runTest(self):
-        pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[2],
-            pktlen=100)
-        send_packet(self, 1, tag_pkt)
-        verify_each_packet_on_multiple_port_lists(
-            self, [pkt], [self.dev_port_list[2:9]])
-        print("\tVerified the flooding happend")
-        time.sleep(1)
-        pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[10],
-                                pktlen=100)
-        send_packet(self, 9, pkt)
-        verify_each_packet_on_multiple_port_lists(
-            self, [pkt], [self.dev_port_list[10:16]])
-        print("\tVerified the flooding happend")
+        send_packet(self, 1, self.pkt)
+        verify_packet(self, self.pkt, self.dev_port_list[2])
 
+        send_packet(self, 3, self.pkt)
+        verify_no_other_packets(self)
         print("\tVerification complete")
 
+    def tearDown(self):
+        pass
+
+
+class FdbDynamicMacMoveTest(T0TestBase):
+    '''
+    Verify if disable MAC move, drop packet with known
+    '''
+
+    def setUp(self):
+        """
+        Test the basic setup process
+        """
+        T0TestBase.setUp(self, is_reset_default_vlan=False)
+        sai_thrift_flush_fdb_entries(
+            self.client,
+            entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
+        fdb_entry = sai_thrift_fdb_entry_t(switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[2],
+            bv_id=self.vlan10)
+        status = sai_thrift_create_fdb_entry(self.client,
+            fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_DYNAMIC,
+            bridge_port_id=self.bridge_port_list[2])
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+        self.pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[2],
+            eth_src=self.local_server_mac_list[1],
+            pktlen=100)
+
+
+    def runTest(self):
+        send_packet(self, 1, self.pkt)
+
+        # inititally add moving MAC to FDB
+        moving_fdb_entry = sai_thrift_fdb_entry_t(
+            switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[1])
+        status = sai_thrift_create_fdb_entry(
+            self.client,
+            moving_fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_STATIC,
+            bridge_port_id=self.bridge_port_list[1],
+            allow_mac_move=True)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+        verify_packet(self, self.pkt, self.dev_port_list[2])
+        send_packet(self, 3, self.pkt)
+        verify_packet(self, self.pkt, self.dev_port_list[2])
+        print("\tVerification complete")
+
+    def tearDown(self):
+        pass
+
+
+class FdbStaticMacMoveTest(T0TestBase):
+    '''
+    Verify if disable MAC move, drop packet with known
+    '''
+
+    def setUp(self):
+        """
+        Test the basic setup process
+        """
+        T0TestBase.setUp(self, is_reset_default_vlan=False)
+        sai_thrift_flush_fdb_entries(
+            self.client,
+            entry_type=SAI_FDB_FLUSH_ENTRY_TYPE_ALL)
+        fdb_entry = sai_thrift_fdb_entry_t(switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[2],
+            bv_id=self.vlan10)
+        status = sai_thrift_create_fdb_entry(self.client,
+            fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_STATIC,
+            bridge_port_id=self.bridge_port_list[2])
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+        fdb_entry = sai_thrift_fdb_entry_t(switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[1],
+            bv_id=self.vlan10)
+        status = sai_thrift_create_fdb_entry(self.client,
+            fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_DYNAMIC,
+            bridge_port_id=self.bridge_port_list[1],
+            allow_mac_move=True)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+
+        self.pkt = simple_udp_packet(eth_dst=self.local_server_mac_list[2],
+            eth_src=self.local_server_mac_list[1],
+            pktlen=100)
+
+    def runTest(self):
+        send_packet(self, 1, self.pkt)
+        verify_packet(self, self.pkt, self.dev_port_list[2])
+
+        # inititally add moving MAC to FDB
+        moving_fdb_entry = sai_thrift_fdb_entry_t(
+            switch_id=self.switch_id,
+            mac_address=self.local_server_mac_list[1])
+        status = sai_thrift_create_fdb_entry(
+            self.client,
+            moving_fdb_entry,
+            type=SAI_FDB_ENTRY_TYPE_STATIC,
+            bridge_port_id=self.bridge_port_list[3],
+            allow_mac_move=True)
+        self.assertEqual(status, SAI_STATUS_SUCCESS)
+        send_packet(self, 3, self.pkt)
+        verify_packet(self, self.pkt, self.dev_port_list[2])
+
+        print("\tVerification complete")
 
     def tearDown(self):
         pass
